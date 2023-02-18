@@ -3,6 +3,7 @@ const checkLength = function (string, symbolAmount) {
   return (symbolAmount > 10);
 };
 
+checkLength('текст');
 // console.log(checkLength('текст')); //Проверка
 
 const checkPalindrome = function (string) {
@@ -12,6 +13,7 @@ const checkPalindrome = function (string) {
   return (string === reverse);
 };
 
+checkPalindrome('Топот довод тОпот');
 // console.log(checkPalindrome('Топот довод тОпот')); //Проверка
 
 const extractionNumber = function (string) {
@@ -19,6 +21,7 @@ const extractionNumber = function (string) {
   return number ? number : NaN;
 };
 
+extractionNumber('I grid, 0.5 beer = -100rubles');
 // console.log(extractionNumber('I grid, 0.5 beer = -100rubles')); //Проверка
 // console.log(extractionNumber('Text Text')); //Проверка
 
@@ -47,4 +50,5 @@ const formationAdress = function (initialString, minLength, addSymbols) {
   return result;
 };
 
+formationAdress('q', 6, 'we3');
 // console.log(formationAdress('q', 6, 'we3')); // Проверка
