@@ -1,12 +1,11 @@
-const checkLength = function (string, symbolAmount) {
-  symbolAmount = string.length;
-  return (symbolAmount > 10);
+const isValidLength = function (string, symbolAmount) {
+  return (symbolAmount === string.length);
 };
 
-checkLength('текст');
-// console.log(checkLength('текст')); //Проверка
+isValidLength('текст', 5);
+// console.log(isValidLength('текст', 5)); //Проверка
 
-const checkPalindrome = function (string) {
+const isPalindrome = function (string) {
   string = string.toLowerCase().replaceAll(' ', ''); // Убирает пробелы и переводит текст в нижний регистр.
   const lastIndex = string.length - 1;
   for (let i = 0; i < string.length / 2; i++) {
@@ -14,19 +13,23 @@ const checkPalindrome = function (string) {
   }
 };
 
-checkPalindrome('Довод тОпот довод');
-// console.log(checkPalindrome('Довод тОпот довод')); //Проверка
+isPalindrome('Довод тОпот довод');
+// console.log(isPalindrome('Довод тОпот довод')); //Проверка
 
 const extractionNumber = function (string) {
+  if (Number(string)) {
+    return `Число ${string}`;
+  }
   const number = string.replace(/\D/g, ''); // "\D" - Любой знак (не цифра) заменяется пустой строкой. "g" - Литерал заменяющий все совпадения в строке. '' - Заменяемое значение.
   return number ? number : NaN;
 };
 
 extractionNumber('I grid, 0.5 beer = -100rubles');
 // console.log(extractionNumber('I grid, 0.5 beer = -100rubles')); //Проверка
+// console.log(extractionNumber('2023')); //Проверка
 // console.log(extractionNumber('Text Text')); //Проверка
 
-const formationAdress = function (initialString, minLength, addSymbols) {
+const generateFileAdress = function (initialString, minLength, addSymbols) {
   if (initialString.length >= minLength) {
     return initialString;
   }
@@ -48,5 +51,5 @@ const formationAdress = function (initialString, minLength, addSymbols) {
   return result;
 };
 
-formationAdress('q', 6, 'we3');
-// console.log(formationAdress('q', 6, 'we3')); // Проверка
+generateFileAdress('q', 6, 'we3');
+// console.log(generateFileAdress('q', 6, 'we3')); // Проверка
