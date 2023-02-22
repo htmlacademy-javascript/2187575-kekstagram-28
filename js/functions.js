@@ -1,5 +1,8 @@
 const isValidLength = function (string, symbolAmount) {
-  return (symbolAmount === string.length);
+  if (isNaN(string) || Number(symbolAmount)) {
+    return (symbolAmount >= string.length);
+  }
+  return 'Неверные данные';
 };
 
 isValidLength('текст', 5);
