@@ -80,25 +80,20 @@ const getRandomArrayElement = function (elements) {
 };
 
 const createComments = function () {
-  const randomAvatar = `img/avatar-${createRandomNumber(1, 6)}.jpg`;
-
   return {
     id: generateIdComments(),
-    avatar: randomAvatar,
+    avatar: `img/avatar-${createRandomNumber(1, 6)}.jpg`,
     message: getRandomArrayElement(COMMENTS_MESSAGE),
     name: getRandomArrayElement(COMMENTS_NAME)
   };
 };
 
 const createObject = function () {
-  const randomLikes = createRandomNumber(15, 200);
-  const randomUrl = `photos/${generateUrl(1, 6)}.jpg`;
-
   return {
     id: generateIdObject(),
-    url: randomUrl,
+    url: `photos/${generateUrl()}.jpg`,
     description: getRandomArrayElement(DESCRIPTION_OBJECT),
-    likes: randomLikes,
+    likes: createRandomNumber(15, 200),
     comments: createComments()
   };
 };
