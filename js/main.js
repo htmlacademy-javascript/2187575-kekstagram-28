@@ -89,12 +89,13 @@ const createComments = function () {
 };
 
 const createObject = function () {
+  const simularComments = JSON.stringify(Array.from({length: createRandomNumber(1, 5)}, createComments));
   return {
     id: generateIdObject(),
     url: `photos/${generateUrl()}.jpg`,
     description: getRandomArrayElement(DESCRIPTION_OBJECT),
     likes: createRandomNumber(15, 200),
-    comments: createComments()
+    comments: simularComments
   };
 };
 
