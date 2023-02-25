@@ -4,7 +4,8 @@ import {commentMessages, commentNames, photoDescription} from './data.js';
 const generatePhotoGallery = function (count) {
 
   const generatePhoto = function (id) {
-    return {id,
+    return {
+      id,
       url: `photos/${(getRandomUniqueNumber(1, 25))()}.jpg`,
       description: photoDescription[getRandomNumber(0, photoDescription.length - 1)],
       likes: getRandomNumber(15, 200),
@@ -26,7 +27,6 @@ const generatePhotoGallery = function (count) {
   for (let i = 1; i <= count; i++) {
     const photo = generatePhoto(i);
 
-    // Цикл создания комментариев
     for (let j = 1; j <= getRandomNumber(1, 5); j++) {
       photo.comments.push(generateComment(j));
     }
