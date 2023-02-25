@@ -1,5 +1,5 @@
 const generatePhotoGallery = function (count) {
-  const commentsMessage = [
+  const commentMessages = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
     'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -8,29 +8,9 @@ const generatePhotoGallery = function (count) {
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
   ];
 
-  const commentsName = [
-    'Егор',
-    'Виктория',
-    'Марина',
-    'Алексей',
-    'Ева',
-    'Ксения',
-    'Дмитрий',
-    'Леонид',
-    'Георгий',
-    'Алисия',
-    'Никита',
-    'Игорь',
-    'Таисия',
-    'София',
-    'Сергей',
-    'Роман',
-    'Лев',
-    'Юлия',
-    'Артём',
-  ];
+  const commentNames = ['Егор', 'Виктория', 'Марина', 'Алексей', 'Ева', 'Ксения', 'Дмитрий', 'Леонид', 'Георгий', 'Алисия', 'Никита', 'Игорь', 'Таисия', 'София', 'Сергей', 'Роман', 'Лев', 'Юлия', 'Артём'];
 
-  const descriptionObject = [
+  const photoDescription = [
     'Момент сохранен в этом фото',
     'Фотография-это способ отразить мысли',
     'В этом фото каждый может увидеть свой смысл',
@@ -40,56 +20,53 @@ const generatePhotoGallery = function (count) {
     'Я начинающий фотограф, оцените мое первое фото',
   ];
 
-  const createRandomNumber = function (min, max) {
+  const getRandomNumber = function (min, max) {
     const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
     const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
     const result = Math.random() * (upper - lower + 1) + lower;
     return Math.floor(result);
   };
 
-  const createRandomNumberGenerator = function (min, max) {
+  const getRandomUniqueNumber = function (min, max) {
     const previousValues = [];
 
     return function () {
-      let currentValue = createRandomNumber(min, max);
+      let currentValue = getRandomNumber(min, max);
       while (previousValues.includes(currentValue)) {
-        currentValue = createRandomNumber(min, max);
+        currentValue = getRandomNumber(min, max);
       }
       previousValues.push(currentValue);
       return currentValue;
     };
   };
 
-  const getRandomArrayElement = function (elements) {
-    return elements[createRandomNumber(0, elements.length - 1)];
-  };
+  const generateIdComments = getRandomUniqueNumber(1, 999);
+  const generateIdObject = getRandomUniqueNumber(1, 25);
+  const generateUrl = getRandomUniqueNumber(1, 25);
 
-  const generateIdComments = createRandomNumberGenerator(1, 999);
-  const generateIdObject = createRandomNumberGenerator(1, 25);
-  const generateUrl = createRandomNumberGenerator(1, 25);
+  // Цикл создания фотографии
+  const createPhoto = [];
+  for (let i = 1; i <= count; i++) {
+    // Цикл создания комментариев
+    const createComments = [];
+    for (let j = 1; j <= getRandomNumber(1, 5); j++) {
+      createComments.push({
+        'id': generateIdComments(),
+        'avatar': `img/avatar-${getRandomNumber(1, 6)}.svg`,
+        'message': commentMessages[getRandomNumber(0, commentMessages.length - 1)],
+        'name': commentNames[getRandomNumber(0, commentNames.length - 1)]
+      });
+    }
 
-  const createComments = function () {
-    return {
-      id: generateIdComments(),
-      avatar: `img/avatar-${createRandomNumber(1, 6)}.jpg`,
-      message: getRandomArrayElement(commentsMessage),
-      name: getRandomArrayElement(commentsName)
-    };
-  };
-
-  const createObject = function () {
-    const simularComments = JSON.stringify(Array.from({length: createRandomNumber(1, 5)}, createComments));
-    return {
-      id: generateIdObject(),
-      url: `photos/${generateUrl()}.jpg`,
-      description: getRandomArrayElement(descriptionObject),
-      likes: createRandomNumber(15, 200),
-      comments: simularComments
-    };
-  };
-
-  const PhotoGallery = Array.from({length: count}, createObject);
-  return PhotoGallery;
+    createPhoto.push({
+      'id': generateIdObject(),
+      'url':`photos/${generateUrl()}.jpg`,
+      'description': photoDescription[getRandomNumber(0, photoDescription.length - 1)],
+      'likes': getRandomNumber(15, 200),
+      'comments': JSON.stringify(createComments)
+    });
+  }
+  return createPhoto;
 };
 
 // eslint-disable-next-line no-console
