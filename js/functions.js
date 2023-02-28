@@ -6,7 +6,6 @@ const isValidLength = function (string, symbolAmount) {
 };
 
 isValidLength('текст', 5);
-// console.log(isValidLength('текст', 5)); //Проверка
 
 const isPalindrome = function (string) {
   string = string.toLowerCase().replaceAll(' ', ''); // Убирает пробелы и переводит текст в нижний регистр.
@@ -17,7 +16,6 @@ const isPalindrome = function (string) {
 };
 
 isPalindrome('Довод тОпот довод');
-// console.log(isPalindrome('Довод тОпот довод')); //Проверка
 
 const extractionNumber = function (string) {
   if (Number(string)) {
@@ -28,9 +26,6 @@ const extractionNumber = function (string) {
 };
 
 extractionNumber('I grid, 0.5 beer = -100rubles');
-// console.log(extractionNumber('I grid, 0.5 beer = -100rubles')); //Проверка
-// console.log(extractionNumber('2023')); //Проверка
-// console.log(extractionNumber('Text Text')); //Проверка
 
 const generateFileAdress = function (initialString, minLength, addSymbols) {
   if (initialString.length >= minLength) {
@@ -55,4 +50,3 @@ const generateFileAdress = function (initialString, minLength, addSymbols) {
 };
 
 generateFileAdress('q', 6, 'we3');
-// console.log(generateFileAdress('q', 6, 'we3')); // Проверка
