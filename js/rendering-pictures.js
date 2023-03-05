@@ -1,17 +1,15 @@
 import {generatePhotoGallery} from './generate-photo-gallery/generate-photo-gallery.js';
 
-const pictureGallery = document.querySelector('.pictures');
-const newPicture = document.querySelector('#picture').content.querySelector('.picture');
-const createPicture = generatePhotoGallery(25);
+const photoGallery = document.querySelector('.pictures');
+const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
+const createPhoto = generatePhotoGallery(25);
 
-const createGalleyFragment = document.createDocumentFragment();
-
-createPicture.forEach(({url, comments, likes }) => {
-  const pictureElement = newPicture.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureGallery.appendChild(pictureElement);
+createPhoto.forEach(({url, comments, likes }) => {
+  const photoElement = newPhoto.cloneNode(true);
+  photoElement.querySelector('.picture__img').src = url;
+  photoElement.querySelector('.picture__comments').textContent = comments.length;
+  photoElement.querySelector('.picture__likes').textContent = likes;
+  photoGallery.appendChild(photoElement);
 });
 
-pictureGallery.appendChild(createGalleyFragment);
+photoGallery.appendChild(document.createDocumentFragment());
