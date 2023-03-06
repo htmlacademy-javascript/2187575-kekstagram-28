@@ -2,20 +2,22 @@ import {getRandomNumber, getRandomUniqueNumber} from '../util.js';
 import {commentMessages, commentNames, photoDescription} from './data.js';
 
 const generatePhotoGallery = function (count) {
+  const generateUrl = getRandomUniqueNumber(1, 25);
+  const generateIdComments = getRandomUniqueNumber(1, 999);
 
   const generatePhoto = function (id) {
     return {
       id,
-      url: `photos/${(getRandomUniqueNumber(1, 25))()}.jpg`,
+      url: `photos/${generateUrl()}.jpg`, // Без переменной юрл не уникальный
       description: photoDescription[getRandomNumber(0, photoDescription.length - 1)],
       likes: getRandomNumber(15, 200),
       comments: []
     };
   };
 
-  const generateComment = function (id) {
+  const generateComment = function () {
     return {
-      id,
+      id: generateIdComments(), // Без переменной id не уникальный
       avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
       message: commentMessages[getRandomNumber(0, commentMessages.length - 1)],
       name: commentNames[getRandomNumber(0, commentNames.length - 1)]
@@ -36,5 +38,4 @@ const generatePhotoGallery = function (count) {
   return photos;
 };
 
-// eslint-disable-next-line no-console
-console.log(generatePhotoGallery(25));
+export {generatePhotoGallery};
