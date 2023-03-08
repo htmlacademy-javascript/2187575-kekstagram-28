@@ -18,4 +18,8 @@ const getRandomUniqueNumber = function (min, max) {
   };
 };
 
-export {getRandomNumber, getRandomUniqueNumber};
+const isEscapeKey = function (evt) {
+  return evt.key === 'Escape';
+};
+
+export {getRandomNumber, getRandomUniqueNumber, isEscapeKey};
