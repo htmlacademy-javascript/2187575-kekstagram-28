@@ -9,6 +9,7 @@ const comment = document.querySelector('.social__comment');
 const commentCount = document.querySelector('.social__comment-count');
 const commentLoader = document.querySelector('.comments-loader');
 
+const totalComment = document.querySelector('.comments-count'); // Типо общее кол-во комментов
 
 const buttonClose = bigPicture.querySelector('#picture-cancel');
 
@@ -25,9 +26,6 @@ const openModal = function () {
   bigPicture.classList.remove('hidden');
 
   document.addEventListener('keydown', onModalEscKeydown);
-  // Для следующего дз
-  commentCount.classList.add('hidden');
-  commentLoader.classList.add('hidden');
 };
 
 const closeModal = function () {
@@ -37,30 +35,43 @@ const closeModal = function () {
   document.removeEventListener('keydown', onModalEscKeydown);
 };
 
-// const renderingComments = function () {
-//   const comments = document.querySelectorAll('.social__comment');
-//   for (let i = 0; i <= comments.length; i++) {
-//     if (i > 4) {
-//       comments[i].classList.add('hidden');
-//       commentLoader.classList.remove('hidden');
-//     }
+const renderingComments = function () {
+  commentLoader.classList.add('hidden');
+  commentCount.textContent = `${5} из ${totalComment.textContent} комментариев`; // Вот тут вопросики
 
-//     let hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
+  const comments = document.querySelectorAll('.social__comment');
 
-//     commentLoader.addEventListener('click', () => {
-//       for (let j = 0; j < 5; j++) {
-//         hiddenComments[j].classList.remove('hidden');
-//       }
-//       hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
-//     });
-//   }
-// };
+  comments.forEach((commentElement, i) => {
+    if (i > 4) {
+      commentElement.classList.add('hidden');
+      commentLoader.classList.remove('hidden');
+    }
+
+    // Вот тут вопросики
+    let hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
+
+    commentLoader.addEventListener('click', () => {
+      for (let j = 0; j < 5; j++) {
+        hiddenComments[j].classList.remove('hidden');
+        if (hiddenComments.length < 5) {
+          commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
+        } else {
+          commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
+        }
+      }
+
+      hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
+      commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
+    });
+    // ____________________________
+  });
+};
 
 const renderingBigPicture = function (i) {
   const {url, likes, comments, description} = generatedPhotoGallery[i];
   document.querySelector('.big-picture__img').getElementsByTagName('img')[0].src = url;
   document.querySelector('.likes-count').textContent = likes;
-  document.querySelector('.comments-count').textContent = comments.length;
+  totalComment.textContent = comments.length;
   document.querySelector('.social__caption').textContent = description;
 
   const createComments = comments;
@@ -78,9 +89,8 @@ const renderingBigPicture = function (i) {
 photos.forEach((photo, i) => {
   photo.addEventListener('click', () => {
     renderingBigPicture(i);
-    // commentLoader.classList.add('hidden');
     openModal();
-    // renderingComments();
+    renderingComments();
   });
 });
 
