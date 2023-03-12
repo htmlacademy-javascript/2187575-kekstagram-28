@@ -46,24 +46,28 @@ const renderingComments = function () {
       commentElement.classList.add('hidden');
       commentLoader.classList.remove('hidden');
     }
-
     // Вот тут вопросики
-    let hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
 
-    commentLoader.addEventListener('click', () => {
-      for (let j = 0; j < 5; j++) {
-        hiddenComments[j].classList.remove('hidden');
-        if (hiddenComments.length < 5) {
-          commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
-        } else {
-          commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
-        }
-      }
-
-      hiddenComments = document.querySelector('.social__comments').querySelectorAll('.hidden');
-      commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
-    });
     // ____________________________
+  });
+
+  // let hiddenComments = commentsList.querySelectorAll('.hidden'); // ВТОРОЙ ВАРИАНТ
+  commentLoader.addEventListener('click', () => {
+
+    const hiddenComments = commentsList.querySelectorAll('.hidden'); // НЕДОДЕЛАННЫЙ ВАРИАНТ
+    for (let j = 0; j < 5; j++) {
+
+      hiddenComments[j].classList.remove('hidden');
+
+      if (hiddenComments.length < 5) {
+        commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`; // ВТОРОЙ ВАРИАНТ
+      } else {
+        commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`; // ВТОРОЙ ВАРИАНТ
+      }
+    }
+    // hiddenComments = commentsList.querySelectorAll('.hidden'); // ВТОРОЙ ВАРИАНТ
+    // console.log(hiddenComments);
+    commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
   });
 };
 
