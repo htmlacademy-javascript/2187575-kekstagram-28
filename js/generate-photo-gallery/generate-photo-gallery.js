@@ -29,7 +29,7 @@ const generatePhotoGallery = function (count) {
   for (let i = 1; i <= count; i++) {
     const photo = generatePhoto(i);
 
-    for (let j = 1; j <= getRandomNumber(15, 20); j++) {
+    for (let j = 1; j <= getRandomNumber(12, 20); j++) {
       photo.comments.push(generateComment(j));
     }
     photos.push(photo);
