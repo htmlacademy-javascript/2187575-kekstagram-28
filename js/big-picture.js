@@ -1,16 +1,10 @@
 import {generatedPhotoGallery} from './rendering-pictures.js';
 
 const bigPicture = document.querySelector('.big-picture');
-
 const photos = document.querySelectorAll('.picture');
-const commentsList = document.querySelector('.social__comments');
-const comment = document.querySelector('.social__comment');
-// Для следующего дз
-const commentCount = document.querySelector('.social__comment-count');
-const commentLoader = document.querySelector('.comments-loader');
-
-const totalComment = document.querySelector('.comments-count'); // Типо общее кол-во комментов
-
+const commentsList = bigPicture.querySelector('.social__comments');
+const comment = bigPicture.querySelector('.social__comment');
+const totalComment = bigPicture.querySelector('.comments-count');
 const buttonClose = bigPicture.querySelector('#picture-cancel');
 
 const onModalEscKeydown = function (evt) {
@@ -24,50 +18,50 @@ const onModalEscKeydown = function (evt) {
 const openModal = function () {
   document.body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
-
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
 const closeModal = function () {
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
-
   document.removeEventListener('keydown', onModalEscKeydown);
 };
 
 const renderingComments = function () {
+  const commentCount = bigPicture.querySelector('.social__comment-count');
+  const commentLoader = bigPicture.querySelector('.comments-loader');
+  const comments = bigPicture.querySelectorAll('.social__comment');
+  const showCommentsCount = 5;
+  let commentsShownCount = 0;
+  let counter = 5;
+  const hiddenComments = [];
+
   commentLoader.classList.add('hidden');
-  commentCount.textContent = `${5} из ${totalComment.textContent} комментариев`; // Вот тут вопросики
+  if (comments.length < 5) {
+    commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
+  } else {
+    commentCount.textContent = `${counter} из ${totalComment.textContent} комментариев`;
+  }
 
-  const comments = document.querySelectorAll('.social__comment');
+  for (let i = showCommentsCount; i < comments.length; i++) {
+    comments[i].classList.add('hidden');
+    commentLoader.classList.remove('hidden');
+    hiddenComments.push(comments[i]);
+  }
 
-  comments.forEach((commentElement, i) => {
-    if (i > 4) {
-      commentElement.classList.add('hidden');
-      commentLoader.classList.remove('hidden');
-    }
-    // Вот тут вопросики
-
-    // ____________________________
-  });
-
-  // let hiddenComments = commentsList.querySelectorAll('.hidden'); // ВТОРОЙ ВАРИАНТ
   commentLoader.addEventListener('click', () => {
-
-    const hiddenComments = commentsList.querySelectorAll('.hidden'); // НЕДОДЕЛАННЫЙ ВАРИАНТ
-    for (let j = 0; j < 5; j++) {
-
-      hiddenComments[j].classList.remove('hidden');
-
-      if (hiddenComments.length < 5) {
-        commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`; // ВТОРОЙ ВАРИАНТ
-      } else {
-        commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`; // ВТОРОЙ ВАРИАНТ
+    for (let i = commentsShownCount; i < commentsShownCount + showCommentsCount; i++) {
+      if (hiddenComments[i]) {
+        hiddenComments[i].classList.remove('hidden');
+        counter ++;
       }
+      commentCount.textContent = `${counter} из ${totalComment.textContent} комментариев`;
     }
-    // hiddenComments = commentsList.querySelectorAll('.hidden'); // ВТОРОЙ ВАРИАНТ
-    // console.log(hiddenComments);
-    commentCount.textContent = `${comments.length - hiddenComments.length} из ${totalComment.textContent} комментариев`;
+    if(counter === comments.length){
+      commentLoader.classList.add('hidden');
+      comments.classList.remove('hidden');
+    }
+    commentsShownCount += showCommentsCount;
   });
 };
 
