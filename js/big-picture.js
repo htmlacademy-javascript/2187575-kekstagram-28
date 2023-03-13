@@ -33,7 +33,7 @@ const renderingComments = function () {
   const comments = bigPicture.querySelectorAll('.social__comment');
   const showCommentsCount = 5;
   let commentsShownCount = 0;
-  let counter = 5;
+  let counter = showCommentsCount;
   const hiddenComments = [];
 
   commentLoader.classList.add('hidden');
