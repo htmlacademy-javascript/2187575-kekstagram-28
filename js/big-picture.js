@@ -33,39 +33,41 @@ const renderingComments = function () {
   const comments = bigPicture.querySelectorAll('.social__comment');
   const showCommentsCount = 5;
   let numberDisplayedComments = 0;
-  let counter = showCommentsCount;
 
   commentLoader.classList.add('hidden');
-  if (comments.length < 5) {
-    commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
-  } else {
-    commentCount.textContent = `${counter} из ${totalComment.textContent} комментариев`;
-    commentLoader.classList.remove('hidden');
-  }
 
   comments.forEach((commentElement, i) => {
-    if (i > 4) {
+    if (i >= showCommentsCount) {
       commentElement.classList.add('hidden');
     } else {
-      numberDisplayedComments = numberDisplayedComments + showCommentsCount;
+      numberDisplayedComments++;
     }
   });
 
-  commentLoader.addEventListener('click', () => {
+  if (comments.length < showCommentsCount) {
+    commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
+  } else {
+    commentCount.textContent = `${numberDisplayedComments} из ${totalComment.textContent} комментариев`;
+    commentLoader.classList.remove('hidden');
+  }
+
+  const onModalCommentLoader = function () {
     const hiddenComments = Array.from(comments).filter((commentElement) => commentElement.classList.contains('hidden'));
     for (let i = 0; i < showCommentsCount; i++) {
       if (hiddenComments[i]) {
         hiddenComments[i].classList.remove('hidden');
-        counter ++;
+        numberDisplayedComments++;
       }
-      commentCount.textContent = `${counter} из ${totalComment.textContent} комментариев`;
+      commentCount.textContent = `${numberDisplayedComments} из ${totalComment.textContent} комментариев`;
     }
 
-    if(counter === comments.length){
+    if(numberDisplayedComments === comments.length){
       commentLoader.classList.add('hidden');
-      comments.classList.remove('hidden');
+      commentLoader.removeEventListener('click', onModalCommentLoader());
     }
-  });
+  };
+
+  commentLoader.addEventListener('click', onModalCommentLoader);
 };
 
 const renderingBigPicture = function (i) {
