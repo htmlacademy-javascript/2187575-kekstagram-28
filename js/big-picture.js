@@ -63,7 +63,7 @@ const renderingComments = function () {
 
     if(numberDisplayedComments === comments.length){
       commentLoader.classList.add('hidden');
-      commentLoader.removeEventListener('click', onModalCommentLoader());
+      commentLoader.removeEventListener('click', onModalCommentLoader);
     }
   };
 
