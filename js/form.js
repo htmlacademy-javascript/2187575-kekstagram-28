@@ -30,9 +30,9 @@ const closeModal = function () {
 //   if (evt.button === 0) {
 //     const hashtags = hashtag.value.toLowerCase().split(' ');
 
-//     // Копируешь сюда одну из функций ниже
+//     // Вставляем одну из функций ниже
 
-//     console.log(/*Вызываешь функцию*/);
+//     console.log(/* Передаем функцию()*/);
 //   }
 // });
 
@@ -71,7 +71,7 @@ const openForm = function () {
   };
 
   const valisdateDuplicate = function () {
-    const duplicateHashtags = hashtags => hashtags.filter((item, index) => hashtags.indexOf(item) !== index);
+    const duplicateHashtags = () => hashtags.filter((item, index) => hashtags.indexOf(item) !== index);
     return duplicateHashtags(hashtags).length === 0;
   };
 
@@ -81,7 +81,7 @@ const openForm = function () {
       const rulesHashtag = /^#[a-zа-яё0-9]{1,19}$|^$/.test(hashtags[i]);
       result.push(rulesHashtag);
     }
-    const checker = result => result.every(v => v === true);
+    const checker = () => result.every((v) => v === true);
     return checker(result);
   };
 
@@ -94,9 +94,11 @@ const openForm = function () {
 
     const isValid = pristine.validate();
     if (isValid) {
-      console.log('Отправляем');
+      // eslint-disable-next-line no-console
+      console.log('Отправляем'); // Отключено для тестов и сдачи 1-ого дз
     } else {
-      console.log('Не отправляем');
+      // eslint-disable-next-line no-console
+      console.log('Не отправляем'); // Отключено для тестов и сдачи 1-ого дз
     }
   });
 };
