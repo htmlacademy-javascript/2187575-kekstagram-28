@@ -8,6 +8,7 @@ const onModalEscKeydown = function (evt) {
   if (document.activeElement !== form.querySelector('.text__description') && document.activeElement !== hashtag) {
     if(evt.key === 'Escape') {
       evt.preventDefault();
+      uploadFile.value = '';
       document.body.classList.remove('modal-open');
       modal.classList.add('hidden');
     }
@@ -23,6 +24,7 @@ const openModal = function () {
 const closeModal = function () {
   document.body.classList.remove('modal-open');
   modal.classList.add('hidden');
+  uploadFile.value = '';
   document.removeEventListener('keydown', onModalEscKeydown);
 };
 
