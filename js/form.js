@@ -28,11 +28,11 @@ const closeModal = function () {
 
 // document.addEventListener('mousedown', (evt) => {
 //   if (evt.button === 0) {
-//     const hashtags = hashtag.value.toLowerCase().split(' ');
+//     const hashtags = hashtag.value.toLowerCase().split(' ').filter((hashtagElement) => hashtagElement);
 
-//     // Вставляем одну из функций ниже
+//     // Вставляем функцию ниже
 
-//     console.log(/* Передаем функцию()*/);
+//     console.log(/*Передаем функцию()*/);
 //   }
 // });
 
@@ -64,7 +64,7 @@ const closeModal = function () {
 
 const openForm = function () {
   const pristine = new Pristine(form);
-  const hashtags = hashtag.value.toLowerCase().split('  ');
+  const hashtags = hashtag.value.toLowerCase().split('  ').filter((hashtagElement) => hashtagElement);
 
   const validateCountHashtags = function () {
     return hashtags.length <= 5;
@@ -78,7 +78,7 @@ const openForm = function () {
   const validateSymbol = function () {
     const result = [];
     for (let i = 0; i < hashtags.length; i++) {
-      const rulesHashtag = /^#[a-zа-яё0-9]{1,19}$|^$/.test(hashtags[i]);
+      const rulesHashtag = /^#[a-zа-яё0-9]{1,19}$/.test(hashtags[i]);
       result.push(rulesHashtag);
     }
     const checker = () => result.every((v) => v === true);
