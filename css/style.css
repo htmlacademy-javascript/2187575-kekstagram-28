@@ -1424,7 +1424,10 @@ main {
   font-size: 10px;
   text-transform: capitalize;
 
+  max-height: 20px;
   margin-bottom: 20px;
 
   color: rgb(231 225 20);
+
+  overflow-y: hidden;
 }

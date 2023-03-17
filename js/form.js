@@ -5,7 +5,7 @@ const buttonClose = form.querySelector('#upload-cancel');
 const hashtag = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
 
-const onModalEscKeydown = function (evt) {
+const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
     evt.preventDefault();
     uploadFile.value = '';
@@ -17,7 +17,7 @@ const onModalEscKeydown = function (evt) {
 const openModal = function () {
   modal.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onModalEscKeydown);
+  document.addEventListener('keydown', onFormKeydown);
 };
 
 const closeModal = function () {
@@ -26,7 +26,7 @@ const closeModal = function () {
   uploadFile.value = '';
   hashtag.value = ''; // Очистка хештегов
   description.value = ''; // Очистка хештегов комментариев
-  document.removeEventListener('keydown', onModalEscKeydown);
+  document.removeEventListener('keydown', onFormKeydown);
 };
 
 const openForm = function () {
@@ -60,9 +60,15 @@ const openForm = function () {
     return result.every((v) => v === true);
   };
 
+  const lengthDescription = function () {
+    const maxLengthDescription = 140;
+    return description.value.length <= maxLengthDescription;
+  };
+
   pristine.addValidator(hashtag, isValidHashtagsQuantity, 'Не более 5 Хэштегов');
   pristine.addValidator(hashtag, isValidHashtagDuplicate, 'Хэштег повторяется');
   pristine.addValidator(hashtag, isValidHashtagSymbol, 'Хэштег содержит больше 20 символов, имеет недопустимые символы или отсуствует "#"');
+  pristine.addValidator(hashtag, lengthDescription, 'Максимальная длинна комментария 140 символов');
 
   const checkForm = function () {
     if (isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false) {
