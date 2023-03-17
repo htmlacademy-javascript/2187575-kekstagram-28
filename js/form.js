@@ -27,6 +27,7 @@ const closeModal = function () {
   uploadFile.value = '';
   hashtag.value = ''; // Очистка хештегов
   description.value = ''; // Очистка хештегов комментариев
+  document.querySelector('.pristine-error').textContent = '';
   document.removeEventListener('keydown', onFormKeydown);
 };
 
@@ -88,6 +89,7 @@ const openForm = function () {
       console.log('Отправляем'); // Отключено для тестов и сдачи 1-ого дз
       form.removeEventListener('submit', validateForm);
       hashtag.removeEventListener('input', checkForm);
+      description.removeEventListener('input', checkForm);
       closeModal();
     }
   };
