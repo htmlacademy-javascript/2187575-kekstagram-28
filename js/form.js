@@ -54,8 +54,7 @@ const openForm = function () {
   const isValidHashtagSymbol = function () {
     const result = [];
     for (let i = 0; i < getHashtags().length; i++) {
-      const rulesHashtag = /^#[a-zа-яё0-9]{1,19}$/.test(getHashtags()[i]);
-      result.push(rulesHashtag);
+      result.push(/^#[a-zа-яё0-9]{1,19}$/.test(getHashtags()[i]));
     }
 
     return result.every((v) => v === true);
