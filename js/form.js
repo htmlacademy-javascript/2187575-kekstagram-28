@@ -11,6 +11,7 @@ const onFormKeydown = function (evt) {
     uploadFile.value = '';
     document.body.classList.remove('modal-open');
     modal.classList.add('hidden');
+    document.addEventListener('keydown', onFormKeydown);
   }
 };
 
@@ -30,14 +31,16 @@ const closeModal = function () {
 };
 
 const openForm = function () {
-  const pristine = new Pristine(form, {
+  const pristineOptions = {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'has-danger',
     successClass: 'has-success',
     errorTextParent: 'img-upload__field-wrapper',
     errorTextTag: 'div',
     errorTextClass: 'text-help'
-  });
+  };
+
+  const pristine = new Pristine(form, pristineOptions);
 
   const getHashtags = function () {
     return hashtag.value.toLowerCase().split(' ').filter((hashtagElement) => hashtagElement);
@@ -60,7 +63,7 @@ const openForm = function () {
     return result.every((v) => v === true);
   };
 
-  const lengthDescription = function () {
+  const isValidLengthDescription = function () {
     const maxLengthDescription = 140;
     return description.value.length <= maxLengthDescription;
   };
@@ -68,30 +71,27 @@ const openForm = function () {
   pristine.addValidator(hashtag, isValidHashtagsQuantity, 'Не более 5 Хэштегов');
   pristine.addValidator(hashtag, isValidHashtagDuplicate, 'Хэштег повторяется');
   pristine.addValidator(hashtag, isValidHashtagSymbol, 'Хэштег содержит больше 20 символов, имеет недопустимые символы или отсуствует "#"');
-  pristine.addValidator(hashtag, lengthDescription, 'Максимальная длинна комментария 140 символов');
+  pristine.addValidator(description, isValidLengthDescription, 'Максимальная длинна комментария 140 символов');
 
   const checkForm = function () {
-    if (isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false) {
-      document.querySelector('.img-upload__submit').disabled = true;
-    } else {
-      document.querySelector('.img-upload__submit').disabled = false;
-    }
+    document.querySelector('.img-upload__submit').disabled = isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false || isValidLengthDescription() === false;
   };
   hashtag.addEventListener('input', checkForm);
+  description.addEventListener('input', checkForm);
 
-  const validForm = function (evt) {
+  const validateForm = function (evt) {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
       // eslint-disable-next-line no-console
       console.log('Отправляем'); // Отключено для тестов и сдачи 1-ого дз
-      form.removeEventListener('submit', validForm);
+      form.removeEventListener('submit', validateForm);
       hashtag.removeEventListener('input', checkForm);
       closeModal();
     }
   };
-  form.addEventListener('submit', validForm);
+  form.addEventListener('submit', validateForm);
 };
 
 uploadFile.addEventListener('change', () => {

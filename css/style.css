@@ -1431,3 +1431,7 @@ main {
 
   overflow-y: hidden;
 }
+
+.img-upload__field-wrapper:nth-child(2) .pristine-error {
+  top: 101px;
+}
