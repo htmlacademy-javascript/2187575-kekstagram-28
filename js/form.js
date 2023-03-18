@@ -1,9 +1,14 @@
+import {ZOOM_INITIAL, ZOOM_BIGGER, ZOOM_SMALLER} from './editing-picture.js';
+
 const form = document.querySelector('.img-upload__form');
 const modal = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const buttonClose = form.querySelector('#upload-cancel');
 const hashtag = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
+
+const SCALE_SMALLER = document.querySelector('.scale__control--smaller');
+const SCALE_BIGGER = document.querySelector('.scale__control--bigger');
 
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
@@ -12,6 +17,13 @@ const onFormKeydown = function (evt) {
     document.body.classList.remove('modal-open');
     modal.classList.add('hidden');
     document.addEventListener('keydown', onFormKeydown);
+    uploadFile.value = '';
+    hashtag.value = '';
+    description.value = '';
+    document.querySelector('.pristine-error').textContent = '';
+
+    SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
+    SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
   }
 };
 
@@ -19,16 +31,22 @@ const openModal = function () {
   modal.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormKeydown);
+
+  SCALE_SMALLER.addEventListener('click', ZOOM_SMALLER);
+  SCALE_BIGGER.addEventListener('click', ZOOM_BIGGER);
 };
 
 const closeModal = function () {
   document.body.classList.remove('modal-open');
   modal.classList.add('hidden');
   uploadFile.value = '';
-  hashtag.value = ''; // Очистка хештегов
-  description.value = ''; // Очистка хештегов комментариев
+  hashtag.value = '';
+  description.value = '';
   document.querySelector('.pristine-error').textContent = '';
   document.removeEventListener('keydown', onFormKeydown);
+
+  SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
+  SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
 };
 
 const openForm = function () {
@@ -99,6 +117,7 @@ const openForm = function () {
 uploadFile.addEventListener('change', () => {
   openModal();
   openForm();
+  ZOOM_INITIAL();
 });
 
 buttonClose.addEventListener('click', () => {
