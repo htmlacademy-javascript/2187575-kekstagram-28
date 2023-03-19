@@ -1,4 +1,4 @@
-import {ZOOM_INITIAL, ZOOM_BIGGER, ZOOM_SMALLER, LEVEL_SLIDER_INITIAL} from './editing-picture.js';
+import {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, LEVEL_SLIDER_INITIAL, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS} from './editing-picture.js';
 
 const form = document.querySelector('.img-upload__form');
 const modal = document.querySelector('.img-upload__overlay');
@@ -7,8 +7,6 @@ const buttonClose = form.querySelector('#upload-cancel');
 const hashtag = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
 
-const SCALE_SMALLER = document.querySelector('.scale__control--smaller');
-const SCALE_BIGGER = document.querySelector('.scale__control--bigger');
 
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
@@ -20,10 +18,15 @@ const onFormKeydown = function (evt) {
     uploadFile.value = '';
     hashtag.value = '';
     description.value = '';
-    document.querySelector('.pristine-error').textContent = '';
 
-    SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
-    SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
+    if (document.querySelector('.img-upload__field-wrapper').contains(document.querySelector('.pristine-error'))) {
+      document.querySelector('.pristine-error').remove();
+      document.querySelector('.img-upload__submit').disabled = false;
+    }
+
+    REMOVE_LISTENER_SCALES_CONTROL();
+    REMOVE_LISTENER_EFFECTS();
+
 
     ZOOM_INITIAL();
     LEVEL_SLIDER_INITIAL();
@@ -35,8 +38,8 @@ const openModal = function () {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormKeydown);
 
-  SCALE_SMALLER.addEventListener('click', ZOOM_SMALLER);
-  SCALE_BIGGER.addEventListener('click', ZOOM_BIGGER);
+  ADD_LISTENER_SCALES_CONTROL();
+  ADD_LISTENER_EFFECTS();
 
   ZOOM_INITIAL();
   LEVEL_SLIDER_INITIAL();
@@ -48,11 +51,15 @@ const closeModal = function () {
   uploadFile.value = '';
   hashtag.value = '';
   description.value = '';
-  document.querySelector('.pristine-error').textContent = '';
   document.removeEventListener('keydown', onFormKeydown);
 
-  SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
-  SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
+  if (document.querySelector('.img-upload__field-wrapper').contains(document.querySelector('.pristine-error'))) {
+    document.querySelector('.pristine-error').remove();
+    document.querySelector('.img-upload__submit').disabled = false;
+  }
+
+  REMOVE_LISTENER_SCALES_CONTROL();
+  REMOVE_LISTENER_EFFECTS();
 
   ZOOM_INITIAL();
   LEVEL_SLIDER_INITIAL();

@@ -1,3 +1,5 @@
+const SCALE_SMALLER = document.querySelector('.scale__control--smaller');
+const SCALE_BIGGER = document.querySelector('.scale__control--bigger');
 const SCALE_VALUE = document.querySelector('.scale__control--value');
 const EDITABLE_PICTURE = document.querySelector('.img-upload__preview');
 
@@ -15,7 +17,7 @@ let initialValue = 100;
 const ZOOM_INITIAL = function () {
   initialValue = 100;
   SCALE_VALUE.value = `${initialValue}%`;
-  EDITABLE_PICTURE.style.transform = `scale(${initialValue / 100})`;
+  EDITABLE_PICTURE.style.transform = '';
 };
 
 const ZOOM_SMALLER = function () {
@@ -29,6 +31,21 @@ const ZOOM_BIGGER = function () {
   if(initialValue < 100) {
     SCALE_VALUE.value = `${initialValue += 25}%`;
     EDITABLE_PICTURE.style.transform = `scale(${initialValue / 100})`;
+  }
+};
+
+const SCALES_CONTROL = [SCALE_SMALLER, SCALE_BIGGER];
+const SCALES_CONTROL_FUNCTION = [ZOOM_SMALLER, ZOOM_BIGGER];
+
+const ADD_LISTENER_SCALES_CONTROL = function () {
+  for (let i = 0; i < SCALES_CONTROL_FUNCTION.length; i++) {
+    SCALES_CONTROL[i].addEventListener('click', SCALES_CONTROL_FUNCTION[i]);
+  }
+};
+
+const REMOVE_LISTENER_SCALES_CONTROL = function () {
+  for (let i = 0; i < SCALES_CONTROL_FUNCTION.length; i++) {
+    SCALES_CONTROL[i].removeEventListener('click', SCALES_CONTROL_FUNCTION[i]);
   }
 };
 
@@ -74,13 +91,13 @@ const LEVEL_SLIDER_INITIAL = function () {
   EDITABLE_PICTURE.style.filter = '';
 };
 
-EFFECT_NONE.addEventListener('change', (evt) => {
+const APPLY_EFFECT_NONE = function (evt) {
   if (evt.target.checked) {
     LEVEL_SLIDER_INITIAL();
   }
-});
+};
 
-EFFECT_CHROME.addEventListener('change', (evt) => {
+const APPLY_EFFECT_CHROME = function (evt) {
   if (evt.target.checked) {
     if (evt.target.checked) {
       LEVEL_SLIDER.noUiSlider.updateOptions ({
@@ -97,15 +114,14 @@ EFFECT_CHROME.addEventListener('change', (evt) => {
       EDITABLE_PICTURE.classList.add('img-upload__preview');
       EDITABLE_PICTURE.classList.add('effects__preview--chrome');
 
-      EDITABLE_PICTURE.style.filter = 'grayscale(1)';
       LEVEL_SLIDER.noUiSlider.on('update', () => {
         EDITABLE_PICTURE.style.filter = `grayscale(${LEVEL_VALUE.value})`;
       });
     }
   }
-});
+};
 
-EFFECT_SEPIA.addEventListener('change', (evt) => {
+const APPLY_EFFECT_SEPIA = function (evt) {
   if (evt.target.checked) {
     if (evt.target.checked) {
       LEVEL_SLIDER.noUiSlider.updateOptions ({
@@ -121,16 +137,15 @@ EFFECT_SEPIA.addEventListener('change', (evt) => {
       EDITABLE_PICTURE.className = '';
       EDITABLE_PICTURE.classList.add('img-upload__preview');
       EDITABLE_PICTURE.classList.add('effects__preview--sepia');
-      EDITABLE_PICTURE.style.filter = 'sepia(1)';
 
       LEVEL_SLIDER.noUiSlider.on('update', () => {
         EDITABLE_PICTURE.style.filter = `sepia(${LEVEL_VALUE.value})`;
       });
     }
   }
-});
+};
 
-EFFECT_MARVIN.addEventListener('change', (evt) => {
+const APPLY_EFFECT_MARVIN = function (evt) {
   if (evt.target.checked) {
     LEVEL_SLIDER.noUiSlider.updateOptions ({
       range: {
@@ -145,15 +160,14 @@ EFFECT_MARVIN.addEventListener('change', (evt) => {
     EDITABLE_PICTURE.className = '';
     EDITABLE_PICTURE.classList.add('img-upload__preview');
     EDITABLE_PICTURE.classList.add('effects__preview--marvin');
-    EDITABLE_PICTURE.style.filter = 'invert(100%)';
 
     LEVEL_SLIDER.noUiSlider.on('update', () => {
       EDITABLE_PICTURE.style.filter = `invert(${LEVEL_VALUE.value}%)`;
     });
   }
-});
+};
 
-EFFECT_PHOBOS.addEventListener('change', (evt) => {
+const APPLY_EFFECT_PHOBOS = function (evt) {
   if (evt.target.checked) {
     LEVEL_SLIDER.noUiSlider.updateOptions ({
       range: {
@@ -168,15 +182,14 @@ EFFECT_PHOBOS.addEventListener('change', (evt) => {
     EDITABLE_PICTURE.className = '';
     EDITABLE_PICTURE.classList.add('img-upload__preview');
     EDITABLE_PICTURE.classList.add('effects__preview--phobos');
-    EDITABLE_PICTURE.style.filter = 'blur(3px)';
 
     LEVEL_SLIDER.noUiSlider.on('update', () => {
       EDITABLE_PICTURE.style.filter = `blur(${LEVEL_VALUE.value}px)`;
     });
   }
-});
+};
 
-EFFECT_HEAT.addEventListener('change', (evt) => {
+const APPLY_EFFECT_HEAT = function (evt) {
   if (evt.target.checked) {
     LEVEL_SLIDER.noUiSlider.updateOptions ({
       range: {
@@ -191,12 +204,26 @@ EFFECT_HEAT.addEventListener('change', (evt) => {
     EDITABLE_PICTURE.className = '';
     EDITABLE_PICTURE.classList.add('img-upload__preview');
     EDITABLE_PICTURE.classList.add('effects__preview--heat');
-    EDITABLE_PICTURE.style.filter = 'brightness(3)';
 
     LEVEL_SLIDER.noUiSlider.on('update', () => {
       EDITABLE_PICTURE.style.filter = `brightness(${LEVEL_VALUE.value})`;
     });
   }
-});
+};
 
-export {ZOOM_INITIAL, ZOOM_SMALLER, ZOOM_BIGGER, LEVEL_SLIDER_INITIAL};
+const EFFECTS = [EFFECT_NONE, EFFECT_CHROME, EFFECT_SEPIA, EFFECT_MARVIN, EFFECT_PHOBOS, EFFECT_HEAT];
+const EFFECTS_FUNCTION = [APPLY_EFFECT_NONE, APPLY_EFFECT_CHROME, APPLY_EFFECT_SEPIA, APPLY_EFFECT_MARVIN, APPLY_EFFECT_PHOBOS, APPLY_EFFECT_HEAT];
+
+const ADD_LISTENER_EFFECTS = function () {
+  for (let i = 0; i < EFFECTS_FUNCTION.length; i++) {
+    EFFECTS[i].addEventListener('change', EFFECTS_FUNCTION[i]);
+  }
+};
+
+const REMOVE_LISTENER_EFFECTS = function () {
+  for (let i = 0; i < EFFECTS_FUNCTION.length; i++) {
+    EFFECTS[i].removeEventListener('change', EFFECTS_FUNCTION[i]);
+  }
+};
+
+export {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, LEVEL_SLIDER_INITIAL, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS};
