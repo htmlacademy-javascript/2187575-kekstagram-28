@@ -27,7 +27,6 @@ const onFormKeydown = function (evt) {
     REMOVE_LISTENER_SCALES_CONTROL();
     REMOVE_LISTENER_EFFECTS();
 
-
     ZOOM_INITIAL();
     LEVEL_SLIDER_INITIAL();
   }
