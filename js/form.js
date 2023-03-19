@@ -1,4 +1,4 @@
-import {ZOOM_INITIAL, ZOOM_BIGGER, ZOOM_SMALLER} from './editing-picture.js';
+import {ZOOM_INITIAL, ZOOM_BIGGER, ZOOM_SMALLER, LEVEL_SLIDER_INITIAL} from './editing-picture.js';
 
 const form = document.querySelector('.img-upload__form');
 const modal = document.querySelector('.img-upload__overlay');
@@ -24,6 +24,9 @@ const onFormKeydown = function (evt) {
 
     SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
     SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
+
+    ZOOM_INITIAL();
+    LEVEL_SLIDER_INITIAL();
   }
 };
 
@@ -34,6 +37,9 @@ const openModal = function () {
 
   SCALE_SMALLER.addEventListener('click', ZOOM_SMALLER);
   SCALE_BIGGER.addEventListener('click', ZOOM_BIGGER);
+
+  ZOOM_INITIAL();
+  LEVEL_SLIDER_INITIAL();
 };
 
 const closeModal = function () {
@@ -47,6 +53,9 @@ const closeModal = function () {
 
   SCALE_SMALLER.removeEventListener('click', ZOOM_SMALLER);
   SCALE_BIGGER.removeEventListener('click', ZOOM_BIGGER);
+
+  ZOOM_INITIAL();
+  LEVEL_SLIDER_INITIAL();
 };
 
 const openForm = function () {
@@ -117,7 +126,6 @@ const openForm = function () {
 uploadFile.addEventListener('change', () => {
   openModal();
   openForm();
-  ZOOM_INITIAL();
 });
 
 buttonClose.addEventListener('click', () => {

@@ -1422,12 +1422,12 @@ main {
   top: 31px;
 
   font-size: 10px;
-  text-transform: capitalize;
+  text-transform: none;
 
   max-height: 20px;
   margin-bottom: 20px;
 
-  color: rgb(231 225 20);
+  color: #ffe753;
 
   overflow-y: hidden;
 }
