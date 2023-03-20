@@ -95,8 +95,13 @@ const CONFIG_NO_UI_SLIDER = {
 };
 
 const ACTIVE_EFFECT = function () {
-  LEVEL_SLIDER_CONTAINER.style.display = 'block';
-  LEVEL_SLIDER.style.display = 'block';
+  if (EFFECT.none.checked) {
+    LEVEL_SLIDER_CONTAINER.style.display = 'none';
+    LEVEL_SLIDER.style.display = 'none';
+  } else {
+    LEVEL_SLIDER_CONTAINER.style.display = 'block';
+    LEVEL_SLIDER.style.display = 'block';
+  }
   EDITABLE_PICTURE.className = '';
   EDITABLE_PICTURE.classList.add('img-upload__preview');
 };
@@ -104,10 +109,7 @@ const ACTIVE_EFFECT = function () {
 const INIT_LEVEL_SLIDER = function () {
   LEVEL_SLIDER.noUiSlider.updateOptions (CONFIG_NO_UI_SLIDER);
   EFFECT.none.checked = true;
-  LEVEL_SLIDER_CONTAINER.style.display = 'none';
-  LEVEL_SLIDER.style.display = 'none';
-  EDITABLE_PICTURE.className = '';
-  EDITABLE_PICTURE.classList.add('img-upload__preview');
+  ACTIVE_EFFECT();
   EDITABLE_PICTURE.style.filter = '';
 };
 
