@@ -1,4 +1,4 @@
-import {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, LEVEL_SLIDER_INITIAL, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS} from './editing-picture.js';
+import {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS} from './editing-picture.js';
 
 const form = document.querySelector('.img-upload__form');
 const modal = document.querySelector('.img-upload__overlay');
@@ -28,7 +28,7 @@ const onFormKeydown = function (evt) {
     REMOVE_LISTENER_EFFECTS();
 
     ZOOM_INITIAL();
-    LEVEL_SLIDER_INITIAL();
+    INIT_LEVEL_SLIDER();
   }
 };
 
@@ -41,7 +41,7 @@ const openModal = function () {
   ADD_LISTENER_EFFECTS();
 
   ZOOM_INITIAL();
-  LEVEL_SLIDER_INITIAL();
+  INIT_LEVEL_SLIDER();
 };
 
 const closeModal = function () {
@@ -61,7 +61,7 @@ const closeModal = function () {
   REMOVE_LISTENER_EFFECTS();
 
   ZOOM_INITIAL();
-  LEVEL_SLIDER_INITIAL();
+  INIT_LEVEL_SLIDER();
 };
 
 const openForm = function () {
