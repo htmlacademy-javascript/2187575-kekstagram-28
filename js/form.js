@@ -11,7 +11,6 @@ const description = form.querySelector('.text__description');
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
     evt.preventDefault();
-    uploadFile.value = '';
     document.body.classList.remove('modal-open');
     modal.classList.add('hidden');
     document.addEventListener('keydown', onFormKeydown);
