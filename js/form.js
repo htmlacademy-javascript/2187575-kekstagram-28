@@ -1,3 +1,5 @@
+import {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS} from './editing-picture.js';
+
 const form = document.querySelector('.img-upload__form');
 const modal = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
@@ -8,10 +10,23 @@ const description = form.querySelector('.text__description');
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
     evt.preventDefault();
-    uploadFile.value = '';
     document.body.classList.remove('modal-open');
     modal.classList.add('hidden');
     document.addEventListener('keydown', onFormKeydown);
+    uploadFile.value = '';
+    hashtag.value = '';
+    description.value = '';
+
+    if (document.querySelector('.img-upload__field-wrapper').contains(document.querySelector('.pristine-error'))) {
+      document.querySelector('.pristine-error').remove();
+      document.querySelector('.img-upload__submit').disabled = false;
+    }
+
+    REMOVE_LISTENER_SCALES_CONTROL();
+    REMOVE_LISTENER_EFFECTS();
+
+    ZOOM_INITIAL();
+    INIT_LEVEL_SLIDER();
   }
 };
 
@@ -19,15 +34,32 @@ const openModal = function () {
   modal.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormKeydown);
+
+  ADD_LISTENER_SCALES_CONTROL();
+  ADD_LISTENER_EFFECTS();
+
+  ZOOM_INITIAL();
+  INIT_LEVEL_SLIDER();
 };
 
 const closeModal = function () {
   document.body.classList.remove('modal-open');
   modal.classList.add('hidden');
   uploadFile.value = '';
-  hashtag.value = ''; // Очистка хештегов
-  description.value = ''; // Очистка хештегов комментариев
+  hashtag.value = '';
+  description.value = '';
   document.removeEventListener('keydown', onFormKeydown);
+
+  if (document.querySelector('.img-upload__field-wrapper').contains(document.querySelector('.pristine-error'))) {
+    document.querySelector('.pristine-error').remove();
+    document.querySelector('.img-upload__submit').disabled = false;
+  }
+
+  REMOVE_LISTENER_SCALES_CONTROL();
+  REMOVE_LISTENER_EFFECTS();
+
+  ZOOM_INITIAL();
+  INIT_LEVEL_SLIDER();
 };
 
 const openForm = function () {
@@ -88,6 +120,7 @@ const openForm = function () {
       console.log('Отправляем'); // Отключено для тестов и сдачи 1-ого дз
       form.removeEventListener('submit', validateForm);
       hashtag.removeEventListener('input', checkForm);
+      description.removeEventListener('input', checkForm);
       closeModal();
     }
   };
