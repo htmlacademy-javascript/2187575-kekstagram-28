@@ -7,7 +7,6 @@ const buttonClose = form.querySelector('#upload-cancel');
 const hashtag = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
 
-
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag) {
     evt.preventDefault();

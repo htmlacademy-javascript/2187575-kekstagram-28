@@ -62,7 +62,6 @@ const REMOVE_LISTENER_SCALES_CONTROL = function () {
   }
 };
 
-
 const NO_UI_SLIDER_CONFIG = {
   range: {
     min: 0,
@@ -71,7 +70,6 @@ const NO_UI_SLIDER_CONFIG = {
   start: 1,
   step: 0.1,
 };
-
 
 noUiSlider.create(LEVEL_SLIDER, {
   ...NO_UI_SLIDER_CONFIG,
