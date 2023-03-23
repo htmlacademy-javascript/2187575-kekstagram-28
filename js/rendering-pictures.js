@@ -1,8 +1,8 @@
-import {generatePhotoGallery} from './generate-photo-gallery/generate-photo-gallery.js';
+import {dataPhotoGallery} from './api.js';
 
 const photoGallery = document.querySelector('.pictures');
 const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
-const generatedPhotoGallery = generatePhotoGallery(25);
+const generatedPhotoGallery = dataPhotoGallery;
 
 const galleryFragment = document.createDocumentFragment();
 

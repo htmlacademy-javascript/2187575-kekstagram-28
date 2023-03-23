@@ -1,4 +1,4 @@
-import {generatedPhotoGallery} from './rendering-pictures.js';
+import {dataPhotoGallery} from './api.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const photos = document.querySelectorAll('.picture');
@@ -71,7 +71,7 @@ const renderingComments = function () {
 };
 
 const renderingBigPicture = function (i) {
-  const {url, likes, comments, description} = generatedPhotoGallery[i];
+  const {url, likes, comments, description} = dataPhotoGallery[i];
   document.querySelector('.big-picture__img').getElementsByTagName('img')[0].src = url;
   document.querySelector('.likes-count').textContent = likes;
   totalComment.textContent = comments.length;
