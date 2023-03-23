@@ -4,6 +4,7 @@ import {closeModal} from './user-form.js';
 const form = document.querySelector('.img-upload__form');
 const hashtag = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
+const buttonSubmit = document.querySelector('.img-upload__submit');
 
 const pristineOptions = {
   classTo: 'img-upload__field-wrapper',
@@ -48,19 +49,19 @@ pristine.addValidator(hashtag, isValidHashtagSymbol, 'Хэштег содерж�
 pristine.addValidator(description, isValidLengthDescription, 'Максимальная длинна комментария 140 символов');
 
 const checkForm = function () {
-  document.querySelector('.img-upload__submit').disabled = isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false || isValidLengthDescription() === false;
+  buttonSubmit.disabled = isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false || isValidLengthDescription() === false;
 };
 hashtag.addEventListener('input', checkForm);
 description.addEventListener('input', checkForm);
 
 const blockSubmitButton = function () {
-  document.querySelector('.img-upload__submit').disabled = true;
-  document.querySelector('.img-upload__submit').textContent = 'ОБРАБАТЫВАЮ...';
+  buttonSubmit.disabled = true;
+  buttonSubmit.textContent = 'ОБРАБАТЫВАЮ...';
 };
 
 const unblockSubmitButton = function () {
-  document.querySelector('.img-upload__submit').disabled = false;
-  document.querySelector('.img-upload__submit').textContent = 'ОПУБЛИКОВАТЬ';
+  buttonSubmit.disabled = false;
+  buttonSubmit.textContent = 'ОПУБЛИКОВАТЬ';
 };
 
 const validateForm = function (evt) {
