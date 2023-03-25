@@ -2,7 +2,6 @@ import {dataPhotoGallery} from './api.js';
 
 const photoGallery = document.querySelector('.pictures');
 const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
-// const generatedPhotoGallery = dataPhotoGallery;
 
 const galleryFragment = document.createDocumentFragment();
 
