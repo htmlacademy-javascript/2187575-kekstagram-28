@@ -1,4 +1,4 @@
-import {dataPhotoGallery} from './api.js';
+import {dataPhotoGallery} from './get-photo-gallery-list.js';
 
 const photoGallery = document.querySelector('.pictures');
 const newPhoto = document.querySelector('#picture').content.querySelector('.picture');

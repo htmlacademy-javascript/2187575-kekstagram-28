@@ -26,12 +26,4 @@ getPhotoData()
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   });
 
-
-const getPhotoGalleryList = function () {
-  return getPhotoData()
-    .then((photos) => photos);
-};
-
-const dataPhotoGallery = await getPhotoGalleryList();
-
-export { dataPhotoGallery, sendPhotoData };
+export { getPhotoData, sendPhotoData };
