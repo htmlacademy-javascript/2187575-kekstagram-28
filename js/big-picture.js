@@ -14,6 +14,7 @@ const onModalEscKeydown = function (evt) {
     evt.preventDefault();
     document.body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
+    commentLoader.removeEventListener('click', onModalCommentLoader);
   }
 };
 
