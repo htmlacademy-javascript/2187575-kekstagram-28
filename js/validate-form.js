@@ -1,9 +1,8 @@
 import { form, buttonSubmit, hashtag, description } from './global-constant.js';
 import { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS } from './editing-picture.js';
-import { pristine } from './pristine-config.js';
+import { pristine, pristineConfig } from './pristine-config.js';
 import { showAlert, onSuccess } from './util.js';
 import { sendPhotoData } from './api.js';
-
 
 const modal = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
@@ -43,6 +42,7 @@ const openModal = function () {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onFormKeydown);
   form.addEventListener('submit', validateForm);
+  pristineConfig();
 
   ADD_LISTENER_SCALES_CONTROL();
   ADD_LISTENER_EFFECTS();
