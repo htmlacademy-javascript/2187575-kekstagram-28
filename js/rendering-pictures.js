@@ -2,11 +2,11 @@ import {dataPhotoGallery} from './api.js';
 
 const photoGallery = document.querySelector('.pictures');
 const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
-const generatedPhotoGallery = dataPhotoGallery;
+// const generatedPhotoGallery = dataPhotoGallery;
 
 const galleryFragment = document.createDocumentFragment();
 
-generatedPhotoGallery.forEach(({url, comments, likes }) => {
+dataPhotoGallery.forEach(({url, comments, likes }) => {
   const photoElement = newPhoto.cloneNode(true);
   photoElement.querySelector('.picture__img').src = url;
   photoElement.querySelector('.picture__comments').textContent = comments.length;
@@ -15,5 +15,3 @@ generatedPhotoGallery.forEach(({url, comments, likes }) => {
 });
 
 photoGallery.appendChild(galleryFragment);
-
-export {generatedPhotoGallery};
