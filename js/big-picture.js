@@ -1,4 +1,4 @@
-import {dataPhotoGallery} from './get-photo-gallery-list.js';
+import { dataPhotoGallery } from './get-photo-gallery-list.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const photos = document.querySelectorAll('.picture');
@@ -10,7 +10,7 @@ const commentLoader = bigPicture.querySelector('.comments-loader');
 let onModalCommentLoader = null;
 
 const onModalEscKeydown = function (evt) {
-  if(evt.key === 'Escape') {
+  if (evt.key === 'Escape') {
     evt.preventDefault();
     document.body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
@@ -24,7 +24,6 @@ const openModal = function () {
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
-
 const closeModal = function () {
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
@@ -34,7 +33,6 @@ const closeModal = function () {
 
 const renderingComments = function () {
   const commentCount = bigPicture.querySelector('.social__comment-count');
-
   const comments = bigPicture.querySelectorAll('.social__comment');
   const showCommentsCount = 5;
   let numberDisplayedComments = 0;
@@ -56,7 +54,6 @@ const renderingComments = function () {
     commentLoader.classList.remove('hidden');
   }
 
-
   onModalCommentLoader = function () {
     const hiddenComments = Array.from(comments).filter((commentElement) => commentElement.classList.contains('hidden'));
     for (let i = 0; i < showCommentsCount; i++) {
@@ -67,7 +64,7 @@ const renderingComments = function () {
       commentCount.textContent = `${numberDisplayedComments} из ${totalComment.textContent} комментариев`;
     }
 
-    if(numberDisplayedComments === comments.length){
+    if (numberDisplayedComments === comments.length){
       commentLoader.classList.add('hidden');
     }
   };

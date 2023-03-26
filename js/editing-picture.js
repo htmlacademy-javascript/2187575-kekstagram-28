@@ -40,7 +40,7 @@ const ZOOM = {
   bigger: function () {
     const MAX_VALUE = 100;
     const STEP_ZOOM = 25;
-    if(initialZoomValue < MAX_VALUE) {
+    if (initialZoomValue < MAX_VALUE) {
       SCALE_VALUE.value = `${initialZoomValue += STEP_ZOOM}%`;
       EDITABLE_PICTURE.style.transform = `scale(${initialZoomValue / 100})`;
     }
@@ -210,4 +210,4 @@ const REMOVE_LISTENER_EFFECTS = function () {
   }
 };
 
-export {ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS};
+export { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS };

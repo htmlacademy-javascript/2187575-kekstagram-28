@@ -1,8 +1,7 @@
-import {dataPhotoGallery} from './get-photo-gallery-list.js';
+import { dataPhotoGallery } from './get-photo-gallery-list.js';
 
 const photoGallery = document.querySelector('.pictures');
 const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
-
 const galleryFragment = document.createDocumentFragment();
 
 dataPhotoGallery.forEach(({url, comments, likes }) => {

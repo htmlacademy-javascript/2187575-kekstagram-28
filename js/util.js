@@ -23,19 +23,32 @@ const showAlert = function () {
   const showErrorModal = errorModal.cloneNode(true);
   document.body.appendChild(showErrorModal);
 
-  const closeModalAlert = () => document.body.removeChild(showErrorModal);
-  showErrorModal.addEventListener('click', closeModalAlert);
-  showErrorModal.querySelector('.error__button').addEventListener('click', () => {
-    showErrorModal.removeEventListener('click', closeModalAlert);
-    closeModalAlert();
-  });
-  document.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape') {
+  const deleteModalAlert = () => document.body.removeChild(showErrorModal);
+
+  const onAlertKeydown = function (evt) {
+    if (evt.key === 'Escape') {
       evt.preventDefault();
-      showErrorModal.removeEventListener('click', closeModalAlert);
-      closeModalAlert();
+      showErrorModal.addEventListener('click', deleteModalAlert);
+      document.removeEventListener('keydown', onAlertKeydown);
+      deleteModalAlert();
     }
+  };
+
+  const closeModalAlert = function () {
+    showErrorModal.removeEventListener('click', deleteModalAlert);
+    deleteModalAlert();
+    document.removeEventListener('keydown', onAlertKeydown);
+  };
+
+  showErrorModal.addEventListener('click', closeModalAlert);
+  document.querySelector('.error__inner').addEventListener('click', (evt) => evt.stopPropagation());
+
+  showErrorModal.querySelector('.error__button').addEventListener('click', () => {
+    closeModalAlert();
+    showErrorModal.removeEventListener('click', closeModalAlert);
   });
+
+  document.addEventListener('keydown', onAlertKeydown);
 };
 
 const onSuccess = function () {
@@ -43,19 +56,32 @@ const onSuccess = function () {
   const showSuccessModal = success.cloneNode(true);
   document.body.appendChild(showSuccessModal);
 
-  const closeModalSuccess = () => document.body.removeChild(showSuccessModal);
-  showSuccessModal.addEventListener('click', closeModalSuccess);
-  showSuccessModal.querySelector('.success__button').addEventListener('click', () => {
-    showSuccessModal.removeEventListener('click', closeModalSuccess);
-    closeModalSuccess();
-  });
-  document.addEventListener('keydown', (evt) => {
-    if(evt.key === 'Escape') {
+  const deleteModalSuccess = () => document.body.removeChild(showSuccessModal);
+
+  const onSuccessKeydown = function (evt) {
+    if (evt.key === 'Escape') {
       evt.preventDefault();
-      showSuccessModal.removeEventListener('click', closeModalSuccess);
-      closeModalSuccess();
+      showSuccessModal.addEventListener('click', deleteModalSuccess);
+      document.removeEventListener('keydown', onSuccessKeydown);
+      deleteModalSuccess();
     }
+  };
+
+  const closeModalSuccess = function () {
+    showSuccessModal.removeEventListener('click', deleteModalSuccess);
+    deleteModalSuccess();
+    document.removeEventListener('keydown', onSuccessKeydown);
+  };
+
+  showSuccessModal.addEventListener('click', closeModalSuccess);
+  document.querySelector('.success__inner').addEventListener('click', (evt) => evt.stopPropagation());
+
+  showSuccessModal.querySelector('.success__button').addEventListener('click', () => {
+    closeModalSuccess();
+    showSuccessModal.removeEventListener('click', closeModalSuccess);
   });
+
+  document.addEventListener('keydown', onSuccessKeydown);
 };
 
-export {getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess};
+export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess };

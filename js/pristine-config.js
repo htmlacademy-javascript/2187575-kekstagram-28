@@ -1,4 +1,4 @@
-import { form, hashtag, description, buttonSubmit } from './global-constant.js';
+import { form, hashtag, description, buttonSubmit } from './global-constants.js';
 
 let pristine = null;
 
