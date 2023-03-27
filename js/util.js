@@ -18,4 +18,70 @@ const getRandomUniqueNumber = function (min, max) {
   };
 };
 
-export {getRandomNumber, getRandomUniqueNumber};
+const showAlert = function () {
+  const errorModal = document.querySelector('#error').content.querySelector('.error');
+  const showErrorModal = errorModal.cloneNode(true);
+  document.body.appendChild(showErrorModal);
+
+  const deleteModalAlert = () => document.body.removeChild(showErrorModal);
+
+  const onAlertKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      showErrorModal.addEventListener('click', deleteModalAlert);
+      document.removeEventListener('keydown', onAlertKeydown);
+      deleteModalAlert();
+    }
+  };
+
+  const closeModalAlert = function () {
+    showErrorModal.removeEventListener('click', deleteModalAlert);
+    deleteModalAlert();
+    document.removeEventListener('keydown', onAlertKeydown);
+  };
+
+  showErrorModal.addEventListener('click', closeModalAlert);
+  document.querySelector('.error__inner').addEventListener('click', (evt) => evt.stopPropagation());
+
+  showErrorModal.querySelector('.error__button').addEventListener('click', () => {
+    closeModalAlert();
+    showErrorModal.removeEventListener('click', closeModalAlert);
+  });
+
+  document.addEventListener('keydown', onAlertKeydown);
+};
+
+const onSuccess = function () {
+  const success = document.querySelector('#success').content.querySelector('.success');
+  const showSuccessModal = success.cloneNode(true);
+  document.body.appendChild(showSuccessModal);
+
+  const deleteModalSuccess = () => document.body.removeChild(showSuccessModal);
+
+  const onSuccessKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      showSuccessModal.addEventListener('click', deleteModalSuccess);
+      document.removeEventListener('keydown', onSuccessKeydown);
+      deleteModalSuccess();
+    }
+  };
+
+  const closeModalSuccess = function () {
+    showSuccessModal.removeEventListener('click', deleteModalSuccess);
+    deleteModalSuccess();
+    document.removeEventListener('keydown', onSuccessKeydown);
+  };
+
+  showSuccessModal.addEventListener('click', closeModalSuccess);
+  document.querySelector('.success__inner').addEventListener('click', (evt) => evt.stopPropagation());
+
+  showSuccessModal.querySelector('.success__button').addEventListener('click', () => {
+    closeModalSuccess();
+    showSuccessModal.removeEventListener('click', closeModalSuccess);
+  });
+
+  document.addEventListener('keydown', onSuccessKeydown);
+};
+
+export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess };
