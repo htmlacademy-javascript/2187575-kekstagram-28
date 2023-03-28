@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomUniqueNumber} from '../util.js';
+import {getRandomNumber, getRandomUniqueNumber} from '../utils.js';
 import {commentMessages, commentNames, photoDescription} from './data.js';
 
 const generatePhotoGallery = function (count) {
