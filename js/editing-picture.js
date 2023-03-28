@@ -1,4 +1,4 @@
-const EDITABLE_PICTURE = document.querySelector('.img-upload__preview');
+import { EDITABLE_PICTURE } from './global-constants.js';
 
 const SCALE_VALUE = document.querySelector('.scale__control--value');
 const SCALE = {

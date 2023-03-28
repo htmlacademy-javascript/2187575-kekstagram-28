@@ -1,5 +1,8 @@
 import { dataPhotoGallery } from './get-photo-gallery-list.js';
 import { renderPhoto } from './rendering-pictures.js';
+import { debounce } from './utils.js';
+
+const RENDER_DELAY = 500;
 
 const filtersForm = document.querySelector('.img-filters__form');
 const filters = filtersForm.querySelectorAll('.img-filters__button');
@@ -25,7 +28,7 @@ filters.forEach((filter) => {
 const getHandlerFilter = (type = 'default') => {
   let sorted;
 
-  return () => {
+  return debounce(() => {
     if (type === 'random') {
       sorted = sortRandom(dataPhotoGallery);
     } else if (type === 'discussed') {
@@ -35,7 +38,7 @@ const getHandlerFilter = (type = 'default') => {
     }
 
     renderPhoto(sorted);
-  };
+  }, RENDER_DELAY);
 };
 
 filterRandom.addEventListener('click', getHandlerFilter('random'));

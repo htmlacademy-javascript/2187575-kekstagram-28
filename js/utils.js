@@ -86,4 +86,13 @@ const onSuccess = function () {
   document.addEventListener('keydown', onSuccessKeydown);
 };
 
-export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess };
+let timeoutId;
+
+function debounce (callback, timeoutDelay) {
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess, debounce };

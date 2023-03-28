@@ -1,4 +1,4 @@
-import { form, buttonSubmit, hashtag, description } from './global-constants.js';
+import { form, buttonSubmit, hashtag, description, EDITABLE_PICTURE } from './global-constants.js';
 import { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS } from './editing-picture.js';
 import { pristine, pristineConfig } from './pristine-config.js';
 import { showAlert, onSuccess } from './utils.js';
@@ -7,7 +7,7 @@ import { sendPhotoData } from './api.js';
 const modal = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const buttonClose = form.querySelector('#upload-cancel');
-let validateForm = null;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const onModalClose = function () {
   document.body.classList.remove('modal-open');
@@ -66,7 +66,7 @@ const unblockSubmitButton = function () {
   buttonSubmit.textContent = 'ОПУБЛИКОВАТЬ';
 };
 
-validateForm = function (evt) {
+function validateForm (evt) {
   evt.preventDefault();
   const isValid = pristine.validate();
 
@@ -84,10 +84,16 @@ validateForm = function (evt) {
       showAlert();
     })
     .finally(unblockSubmitButton);
-};
+}
 
 uploadFile.addEventListener('change', () => {
   openModal();
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    EDITABLE_PICTURE.querySelector('img').src = URL.createObjectURL(file);
+  }
 });
 
 buttonClose.addEventListener('click', () => {
