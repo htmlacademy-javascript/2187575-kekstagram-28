@@ -20,6 +20,18 @@ const getRandomUniqueNumber = function (min, max) {
   };
 };
 
+const getShowAlert = function () {
+  const errorModal = document.querySelector('#error').content.querySelector('.error');
+  const showErrorModal = errorModal.cloneNode(true);
+  showErrorModal.getElementsByTagName('h2')[0].textContent = 'Ошибка запроса при загрузке данных';
+  showErrorModal.getElementsByTagName('button')[0].remove();
+  document.body.appendChild(showErrorModal);
+  const removeModal = function () {
+    document.body.removeChild(showErrorModal);
+  };
+  setTimeout(removeModal, 3000);
+};
+
 const showAlert = function () {
   const errorModal = document.querySelector('#error').content.querySelector('.error');
   const showErrorModal = errorModal.cloneNode(true);
@@ -95,4 +107,4 @@ function debounce (callback, timeoutDelay) {
   };
 }
 
-export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess, debounce };
+export { getRandomNumber, getRandomUniqueNumber, getShowAlert, showAlert, onSuccess, debounce };
