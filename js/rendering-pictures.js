@@ -1,5 +1,5 @@
 import { dataPhotoGallery } from './get-photo-gallery-list.js';
-import { openPhoto } from './big-picture.js'; // NEW
+import { addListenerModal } from './big-picture.js';
 
 const photoGallery = document.querySelector('.pictures');
 
@@ -9,7 +9,6 @@ photoContainer.style.display = 'contents';
 photoGallery.appendChild(photoContainer);
 
 const renderPhoto = function (array) {
-
   const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
   const galleryFragment = document.createDocumentFragment();
 
@@ -23,7 +22,7 @@ const renderPhoto = function (array) {
   });
 
   photoContainer.appendChild(galleryFragment);
-  photoContainer.addEventListener('click', openPhoto()); // NEW
+  photoContainer.addEventListener('click', addListenerModal());
 };
 
 renderPhoto(dataPhotoGallery);

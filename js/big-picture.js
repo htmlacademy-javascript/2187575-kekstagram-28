@@ -90,8 +90,8 @@ const renderingBigPicture = function (photoGalleryItem) {
   });
 };
 
-const openPhoto = function () {// NEW
-  const photos = document.querySelectorAll('.picture');// NEW
+const addListenerModal = function () {
+  const photos = document.querySelectorAll('.picture');
   photos.forEach((photo, i) => {
     photo.addEventListener('click', () => {
       renderingBigPicture(dataPhotoGallery[i]);
@@ -99,10 +99,10 @@ const openPhoto = function () {// NEW
       renderingComments();
     });
   });
-};// NEW
+};
 
 buttonClose.addEventListener('click', () => {
   closeModal();
 });
 
-export { openPhoto };// NEW
+export { addListenerModal };// NEW

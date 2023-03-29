@@ -7,4 +7,4 @@ const getPhotoGalleryList = function () {
 
 const dataPhotoGallery = await getPhotoGalleryList();
 
-export { dataPhotoGallery, getPhotoGalleryList };
+export { dataPhotoGallery };

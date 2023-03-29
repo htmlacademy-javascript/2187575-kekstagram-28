@@ -11,25 +11,27 @@ const filterRandom = filtersForm.querySelector('#filter-random');
 const filterDiscussed = filtersForm.querySelector('#filter-discussed');
 
 const getDefaultPhotos = function () {
-  return dataPhotoGallery; // ??
+  return dataPhotoGallery.sort((a, b) => parseFloat(a.id) - parseFloat(b.id));
 };
 
 const getRandomPhotos = function () {
-  return dataPhotoGallery.sort(() => 0.5 - Math.random()).slice(0, 10); // Убрал .slice() Перед sort
+  return dataPhotoGallery.sort(() => 0.5 - Math.random()).slice(0, 10);
 };
 
 const getDiscussedPhotos = function () {
-  return dataPhotoGallery.sort((a, b) => parseFloat(b.comments.length) - parseFloat(a.comments.length)); // Убрал .slice() Перед sort
+  return dataPhotoGallery.sort((a, b) => parseFloat(b.comments.length) - parseFloat(a.comments.length));
 };
 
 filters.forEach((filter) => {
   filter.addEventListener('click', () => {
+    filtersForm.querySelector('.img-filters__button--active').disabled = false;
     filtersForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     filter.classList.add('img-filters__button--active');
+    filtersForm.querySelector('.img-filters__button--active').disabled = true;
   });
 });
 
-const getSort = (type = 'default') => {
+const getSort = function (type = 'default') {
   let sorted;
 
   return debounce(() => {
@@ -44,6 +46,7 @@ const getSort = (type = 'default') => {
         sorted = getDefaultPhotos(dataPhotoGallery);
         break;
     }
+
     renderPhoto(sorted);
   }, RENDER_DELAY);
 };
