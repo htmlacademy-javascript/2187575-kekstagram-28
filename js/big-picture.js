@@ -1,7 +1,7 @@
 import { dataPhotoGallery } from './get-photo-gallery-list.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const photos = document.querySelectorAll('.picture');
+
 const commentsList = bigPicture.querySelector('.social__comments');
 const comment = bigPicture.querySelector('.social__comment');
 const totalComment = bigPicture.querySelector('.comments-count');
@@ -32,22 +32,22 @@ const closeModal = function () {
 };
 
 const renderingComments = function () {
+  const SHOW_COMMENTS_COUNT = 5;
   const commentCount = bigPicture.querySelector('.social__comment-count');
   const comments = bigPicture.querySelectorAll('.social__comment');
-  const showCommentsCount = 5;
   let numberDisplayedComments = 0;
 
   commentLoader.classList.add('hidden');
 
   comments.forEach((commentElement, i) => {
-    if (i >= showCommentsCount) {
+    if (i >= SHOW_COMMENTS_COUNT) {
       commentElement.classList.add('hidden');
     } else {
       numberDisplayedComments++;
     }
   });
 
-  if (comments.length < showCommentsCount) {
+  if (comments.length < SHOW_COMMENTS_COUNT) {
     commentCount.textContent = `${comments.length} из ${totalComment.textContent} комментариев`;
   } else {
     commentCount.textContent = `${numberDisplayedComments} из ${totalComment.textContent} комментариев`;
@@ -56,7 +56,7 @@ const renderingComments = function () {
 
   onModalCommentLoader = function () {
     const hiddenComments = Array.from(comments).filter((commentElement) => commentElement.classList.contains('hidden'));
-    for (let i = 0; i < showCommentsCount; i++) {
+    for (let i = 0; i < SHOW_COMMENTS_COUNT; i++) {
       if (hiddenComments[i]) {
         hiddenComments[i].classList.remove('hidden');
         numberDisplayedComments++;
@@ -90,14 +90,19 @@ const renderingBigPicture = function (photoGalleryItem) {
   });
 };
 
-photos.forEach((photo, i) => {
-  photo.addEventListener('click', () => {
-    renderingBigPicture(dataPhotoGallery[i]);
-    openModal();
-    renderingComments();
+const openPhoto = function () {// NEW
+  const photos = document.querySelectorAll('.picture');// NEW
+  photos.forEach((photo, i) => {
+    photo.addEventListener('click', () => {
+      renderingBigPicture(dataPhotoGallery[i]);
+      openModal();
+      renderingComments();
+    });
   });
-});
+};// NEW
 
 buttonClose.addEventListener('click', () => {
   closeModal();
 });
+
+export { openPhoto };// NEW

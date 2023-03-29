@@ -1,8 +1,10 @@
 import { dataPhotoGallery } from './get-photo-gallery-list.js';
+import { openPhoto } from './big-picture.js'; // NEW
 
 const photoGallery = document.querySelector('.pictures');
 
 const photoContainer = document.createElement('div');
+photoContainer.className = 'picture__container';
 photoContainer.style.display = 'contents';
 photoGallery.appendChild(photoContainer);
 
@@ -10,8 +12,8 @@ const renderPhoto = function (array) {
 
   const newPhoto = document.querySelector('#picture').content.querySelector('.picture');
   const galleryFragment = document.createDocumentFragment();
-  photoContainer.innerHTML = '';
 
+  photoContainer.innerHTML = '';
   array.forEach(({url, comments, likes }) => {
     const photoElement = newPhoto.cloneNode(true);
     photoElement.querySelector('.picture__img').src = url;
@@ -21,6 +23,7 @@ const renderPhoto = function (array) {
   });
 
   photoContainer.appendChild(galleryFragment);
+  photoContainer.addEventListener('click', openPhoto()); // NEW
 };
 
 renderPhoto(dataPhotoGallery);

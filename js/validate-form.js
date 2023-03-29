@@ -1,5 +1,5 @@
-import { form, buttonSubmit, hashtag, description, EDITABLE_PICTURE } from './global-constants.js';
-import { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS } from './editing-picture.js';
+import { form, buttonSubmit, hashtag, description, editablePicture } from './global-constants.js';
+import { zoomInitial, addListenerScalesControl, removeListenerScalesControl, initLevelSlider, addListenerEffects, removeListenerEffects } from './editing-picture.js';
 import { pristine, pristineConfig } from './pristine-config.js';
 import { showAlert, onSuccess } from './utils.js';
 import { sendPhotoData } from './api.js';
@@ -22,11 +22,11 @@ const onModalClose = function () {
     document.querySelector('.img-upload__submit').disabled = false;
   }
 
-  REMOVE_LISTENER_SCALES_CONTROL();
-  REMOVE_LISTENER_EFFECTS();
+  removeListenerScalesControl();
+  removeListenerEffects();
 
-  ZOOM_INITIAL();
-  INIT_LEVEL_SLIDER();
+  zoomInitial();
+  initLevelSlider();
 };
 
 const onFormKeydown = function (evt) {
@@ -44,11 +44,11 @@ const openModal = function () {
   form.addEventListener('submit', validateForm);
   pristineConfig();
 
-  ADD_LISTENER_SCALES_CONTROL();
-  ADD_LISTENER_EFFECTS();
+  addListenerScalesControl();
+  addListenerEffects();
 
-  ZOOM_INITIAL();
-  INIT_LEVEL_SLIDER();
+  zoomInitial();
+  initLevelSlider();
 };
 
 const closeModal = function () {
@@ -90,9 +90,9 @@ uploadFile.addEventListener('change', () => {
   openModal();
   const file = uploadFile.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
   if (matches) {
-    EDITABLE_PICTURE.querySelector('img').src = URL.createObjectURL(file);
+    editablePicture.querySelector('img').src = URL.createObjectURL(file);
   }
 });
 
