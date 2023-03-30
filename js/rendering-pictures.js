@@ -1,5 +1,5 @@
 import { dataPhotoGallery } from './get-photo-gallery-list.js';
-import { addListenerModal } from './big-picture.js';
+import { openBigPicture } from './big-picture.js';
 
 const photoGallery = document.querySelector('.pictures');
 
@@ -22,7 +22,7 @@ const renderPhoto = function (array) {
   });
 
   photoContainer.appendChild(galleryFragment);
-  photoContainer.addEventListener('click', addListenerModal());
+  photoContainer.addEventListener('click', openBigPicture());
 };
 
 renderPhoto(dataPhotoGallery);

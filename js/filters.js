@@ -31,7 +31,7 @@ filters.forEach((filter) => {
   });
 });
 
-const getSort = function (type = 'default') {
+const getSortedPhotos = function (type = 'default') {
   let sorted;
 
   return debounce(() => {
@@ -51,6 +51,6 @@ const getSort = function (type = 'default') {
   }, RENDER_DELAY);
 };
 
-filterRandom.addEventListener('click', getSort('random'));
-filterDiscussed.addEventListener('click', getSort('discussed'));
-filterDefault.addEventListener('click', getSort('default'));
+filterRandom.addEventListener('click', getSortedPhotos('random'));
+filterDiscussed.addEventListener('click', getSortedPhotos('discussed'));
+filterDefault.addEventListener('click', getSortedPhotos('default'));

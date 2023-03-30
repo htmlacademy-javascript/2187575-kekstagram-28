@@ -1,7 +1,7 @@
 import { editablePicture } from './global-constants.js';
 
 const scaleValue = document.querySelector('.scale__control--value');
-const Scale = {
+const scale = {
   smaller: document.querySelector('.scale__control--smaller'),
   bigger: document.querySelector('.scale__control--bigger'),
 };
@@ -10,7 +10,7 @@ const levelSliderContainer = document.querySelector('.img-upload__effect-level')
 const levelSlider = document.querySelector('.effect-level__slider');
 const levelValue = document.querySelector('.effect-level__value');
 
-const Effect = {
+const effect = {
   none: document.getElementById('effect-none'),
   chrome: document.getElementById('effect-chrome'),
   sepia: document.getElementById('effect-sepia'),
@@ -47,7 +47,7 @@ const zoom = {
   }
 };
 
-const scalesControls = [Scale.smaller, Scale.bigger];
+const scalesControls = [scale.smaller, scale.bigger];
 const scalesControlsFunctions = [zoom.smaller, zoom.bigger];
 
 const addListenerScalesControl = function () {
@@ -92,21 +92,21 @@ levelSlider.noUiSlider.on('update', () => {
 });
 
 const activeEffectConfig = function () {
-  levelSliderContainer.style.display = Effect.none.checked ? 'none' : 'block';
-  levelSlider.style.display = Effect.none.checked ? 'none' : 'block';
+  levelSliderContainer.style.display = effect.none.checked ? 'none' : 'block';
+  levelSlider.style.display = effect.none.checked ? 'none' : 'block';
   editablePicture.className = '';
   editablePicture.classList.add('img-upload__preview');
 };
 
 const initLevelSlider = function () {
   levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
-  Effect.none.checked = true;
+  effect.none.checked = true;
   activeEffectConfig();
   editablePicture.style.filter = '';
 };
 
 
-const ApplyEffect = {
+const applyEffect = {
   none: function (evt) {
     if (evt.target.checked) {
       initLevelSlider();
@@ -195,8 +195,8 @@ const ApplyEffect = {
   }
 };
 
-const effects = [Effect.none, Effect.chrome, Effect.sepia, Effect.marvin, Effect.phobos, Effect.heat];
-const effectsFunctions = [ApplyEffect.none, ApplyEffect.chrome, ApplyEffect.sepia, ApplyEffect.marvin, ApplyEffect.phobos, ApplyEffect.heat];
+const effects = [effect.none, effect.chrome, effect.sepia, effect.marvin, effect.phobos, effect.heat];
+const effectsFunctions = [applyEffect.none, applyEffect.chrome, applyEffect.sepia, applyEffect.marvin, applyEffect.phobos, applyEffect.heat];
 
 const addListenerEffects = function () {
   for (let i = 0; i < effectsFunctions.length; i++) {

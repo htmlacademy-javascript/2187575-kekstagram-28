@@ -90,7 +90,7 @@ const renderingBigPicture = function (photoGalleryItem) {
   });
 };
 
-const addListenerModal = function () {
+const openBigPicture = function () {
   const photos = document.querySelectorAll('.picture');
   photos.forEach((photo, i) => {
     photo.addEventListener('click', () => {
@@ -105,4 +105,4 @@ buttonClose.addEventListener('click', () => {
   closeModal();
 });
 
-export { addListenerModal };// NEW
+export { openBigPicture };// NEW
