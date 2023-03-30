@@ -19,4 +19,4 @@ const photoDescription = [
   'Я начинающий фотограф, оцените мое первое фото',
 ];
 
-export {commentMessages, commentNames, photoDescription};
+export { commentMessages, commentNames, photoDescription };

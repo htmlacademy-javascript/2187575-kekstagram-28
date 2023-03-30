@@ -2,6 +2,7 @@ const getRandomNumber = function (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
+
   return Math.floor(result);
 };
 
@@ -14,8 +15,21 @@ const getRandomUniqueNumber = function (min, max) {
       currentValue = getRandomNumber(min, max);
     }
     previousValues.push(currentValue);
+
     return currentValue;
   };
+};
+
+const getShowAlert = function () {
+  const errorModal = document.querySelector('#error').content.querySelector('.error');
+  const showErrorModal = errorModal.cloneNode(true);
+  showErrorModal.getElementsByTagName('h2')[0].textContent = 'Ошибка запроса при загрузке данных';
+  showErrorModal.getElementsByTagName('button')[0].remove();
+  document.body.appendChild(showErrorModal);
+  const removeModal = function () {
+    document.body.removeChild(showErrorModal);
+  };
+  setTimeout(removeModal, 3000);
 };
 
 const showAlert = function () {
@@ -84,4 +98,13 @@ const onSuccess = function () {
   document.addEventListener('keydown', onSuccessKeydown);
 };
 
-export { getRandomNumber, getRandomUniqueNumber, showAlert, onSuccess };
+let timeoutId;
+
+function debounce (callback, timeoutDelay) {
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomNumber, getRandomUniqueNumber, getShowAlert, showAlert, onSuccess, debounce };

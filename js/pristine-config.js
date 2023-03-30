@@ -19,8 +19,8 @@ const pristineConfig = function () {
   };
 
   const isValidHashtagsQuantity = function () {
-    const maxCountHashtag = 5;
-    return getHashtags().length <= maxCountHashtag;
+    const MAX_COUNT_HASHTAG = 5;
+    return getHashtags().length <= MAX_COUNT_HASHTAG;
   };
 
   const isValidHashtagDuplicate = function () {
@@ -37,8 +37,8 @@ const pristineConfig = function () {
   };
 
   const isValidLengthDescription = function () {
-    const maxLengthDescription = 140;
-    return description.value.length <= maxLengthDescription;
+    const MAX_LENGTH_DESCRIPTION = 140;
+    return description.value.length <= MAX_LENGTH_DESCRIPTION;
   };
 
   pristine.addValidator(hashtag, isValidHashtagsQuantity, 'Не более 5 Хэштегов');

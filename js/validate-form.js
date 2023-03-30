@@ -1,15 +1,15 @@
-import { form, buttonSubmit, hashtag, description } from './global-constants.js';
-import { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS } from './editing-picture.js';
+import { form, buttonSubmit, hashtag, description, editablePicture } from './global-constants.js';
+import { zoomInitial, addListenerScalesControl, removeListenerScalesControl, initLevelSlider, addListenerEffects, removeListenerEffects } from './editing-picture.js';
 import { pristine, pristineConfig } from './pristine-config.js';
-import { showAlert, onSuccess } from './util.js';
+import { showAlert, onSuccess } from './utils.js';
 import { sendPhotoData } from './api.js';
 
 const modal = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const buttonClose = form.querySelector('#upload-cancel');
-let validateForm = null;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const closeModalConfig = function () {
+const onModalClose = function () {
   document.body.classList.remove('modal-open');
   modal.classList.add('hidden');
   form.removeEventListener('submit', validateForm);
@@ -22,18 +22,18 @@ const closeModalConfig = function () {
     document.querySelector('.img-upload__submit').disabled = false;
   }
 
-  REMOVE_LISTENER_SCALES_CONTROL();
-  REMOVE_LISTENER_EFFECTS();
+  removeListenerScalesControl();
+  removeListenerEffects();
 
-  ZOOM_INITIAL();
-  INIT_LEVEL_SLIDER();
+  zoomInitial();
+  initLevelSlider();
 };
 
 const onFormKeydown = function (evt) {
   if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag && !document.contains(document.querySelector('.error')) && !document.contains(document.querySelector('.success'))) {
     evt.preventDefault();
     document.addEventListener('keydown', onFormKeydown);
-    closeModalConfig();
+    onModalClose();
   }
 };
 
@@ -44,15 +44,15 @@ const openModal = function () {
   form.addEventListener('submit', validateForm);
   pristineConfig();
 
-  ADD_LISTENER_SCALES_CONTROL();
-  ADD_LISTENER_EFFECTS();
+  addListenerScalesControl();
+  addListenerEffects();
 
-  ZOOM_INITIAL();
-  INIT_LEVEL_SLIDER();
+  zoomInitial();
+  initLevelSlider();
 };
 
 const closeModal = function () {
-  closeModalConfig();
+  onModalClose();
   document.removeEventListener('keydown', onFormKeydown);
 };
 
@@ -66,7 +66,7 @@ const unblockSubmitButton = function () {
   buttonSubmit.textContent = 'ОПУБЛИКОВАТЬ';
 };
 
-validateForm = function (evt) {
+function validateForm (evt) {
   evt.preventDefault();
   const isValid = pristine.validate();
 
@@ -84,10 +84,16 @@ validateForm = function (evt) {
       showAlert();
     })
     .finally(unblockSubmitButton);
-};
+}
 
 uploadFile.addEventListener('change', () => {
   openModal();
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+  if (matches) {
+    editablePicture.querySelector('img').src = URL.createObjectURL(file);
+  }
 });
 
 buttonClose.addEventListener('click', () => {

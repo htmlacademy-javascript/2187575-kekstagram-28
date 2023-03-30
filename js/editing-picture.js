@@ -1,16 +1,16 @@
-const EDITABLE_PICTURE = document.querySelector('.img-upload__preview');
+import { editablePicture } from './global-constants.js';
 
-const SCALE_VALUE = document.querySelector('.scale__control--value');
-const SCALE = {
+const scaleValue = document.querySelector('.scale__control--value');
+const scale = {
   smaller: document.querySelector('.scale__control--smaller'),
   bigger: document.querySelector('.scale__control--bigger'),
 };
 
-const LEVEL_SLIDER_CONTAINER = document.querySelector('.img-upload__effect-level');
-const LEVEL_SLIDER = document.querySelector('.effect-level__slider');
-const LEVEL_VALUE = document.querySelector('.effect-level__value');
+const levelSliderContainer = document.querySelector('.img-upload__effect-level');
+const levelSlider = document.querySelector('.effect-level__slider');
+const levelValue = document.querySelector('.effect-level__value');
 
-const EFFECT = {
+const effect = {
   none: document.getElementById('effect-none'),
   chrome: document.getElementById('effect-chrome'),
   sepia: document.getElementById('effect-sepia'),
@@ -21,19 +21,19 @@ const EFFECT = {
 
 let initialZoomValue = 100;
 
-const ZOOM_INITIAL = function () {
+const zoomInitial = function () {
   initialZoomValue = 100;
-  SCALE_VALUE.value = `${initialZoomValue}%`;
-  EDITABLE_PICTURE.style.transform = '';
+  scaleValue.value = `${initialZoomValue}%`;
+  editablePicture.style.transform = '';
 };
 
-const ZOOM = {
+const zoom = {
   smaller: function () {
     const MIN_VALUE = 25;
     const STEP_ZOOM = 25;
     if (initialZoomValue > MIN_VALUE) {
-      SCALE_VALUE.value = `${initialZoomValue -= STEP_ZOOM}%`;
-      EDITABLE_PICTURE.style.transform = `scale(${initialZoomValue / 100})`;
+      scaleValue.value = `${initialZoomValue -= STEP_ZOOM}%`;
+      editablePicture.style.transform = `scale(${initialZoomValue / 100})`;
     }
   },
 
@@ -41,24 +41,24 @@ const ZOOM = {
     const MAX_VALUE = 100;
     const STEP_ZOOM = 25;
     if (initialZoomValue < MAX_VALUE) {
-      SCALE_VALUE.value = `${initialZoomValue += STEP_ZOOM}%`;
-      EDITABLE_PICTURE.style.transform = `scale(${initialZoomValue / 100})`;
+      scaleValue.value = `${initialZoomValue += STEP_ZOOM}%`;
+      editablePicture.style.transform = `scale(${initialZoomValue / 100})`;
     }
   }
 };
 
-const SCALES_CONTROLS = [SCALE.smaller, SCALE.bigger];
-const SCALES_CONTROL_FUNCTIONS = [ZOOM.smaller, ZOOM.bigger];
+const scalesControls = [scale.smaller, scale.bigger];
+const scalesControlsFunctions = [zoom.smaller, zoom.bigger];
 
-const ADD_LISTENER_SCALES_CONTROL = function () {
-  for (let i = 0; i < SCALES_CONTROL_FUNCTIONS.length; i++) {
-    SCALES_CONTROLS[i].addEventListener('click', SCALES_CONTROL_FUNCTIONS[i]);
+const addListenerScalesControl = function () {
+  for (let i = 0; i < scalesControlsFunctions.length; i++) {
+    scalesControls[i].addEventListener('click', scalesControlsFunctions[i]);
   }
 };
 
-const REMOVE_LISTENER_SCALES_CONTROL = function () {
-  for (let i = 0; i < SCALES_CONTROL_FUNCTIONS.length; i++) {
-    SCALES_CONTROLS[i].removeEventListener('click', SCALES_CONTROL_FUNCTIONS[i]);
+const removeListenerScalesControl = function () {
+  for (let i = 0; i < scalesControlsFunctions.length; i++) {
+    scalesControls[i].removeEventListener('click', scalesControlsFunctions[i]);
   }
 };
 
@@ -71,7 +71,7 @@ const NO_UI_SLIDER_CONFIG = {
   step: 0.1,
 };
 
-noUiSlider.create(LEVEL_SLIDER, {
+noUiSlider.create(levelSlider, {
   ...NO_UI_SLIDER_CONFIG,
   connect: 'lower',
   format: {
@@ -87,59 +87,59 @@ noUiSlider.create(LEVEL_SLIDER, {
   },
 });
 
-LEVEL_SLIDER.noUiSlider.on('update', () => {
-  LEVEL_VALUE.value = LEVEL_SLIDER.noUiSlider.get();
+levelSlider.noUiSlider.on('update', () => {
+  levelValue.value = levelSlider.noUiSlider.get();
 });
 
-const ACTIVE_EFFECT_CONFIG = function () {
-  LEVEL_SLIDER_CONTAINER.style.display = EFFECT.none.checked ? 'none' : 'block';
-  LEVEL_SLIDER.style.display = EFFECT.none.checked ? 'none' : 'block';
-  EDITABLE_PICTURE.className = '';
-  EDITABLE_PICTURE.classList.add('img-upload__preview');
+const activeEffectConfig = function () {
+  levelSliderContainer.style.display = effect.none.checked ? 'none' : 'block';
+  levelSlider.style.display = effect.none.checked ? 'none' : 'block';
+  editablePicture.className = '';
+  editablePicture.classList.add('img-upload__preview');
 };
 
-const INIT_LEVEL_SLIDER = function () {
-  LEVEL_SLIDER.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
-  EFFECT.none.checked = true;
-  ACTIVE_EFFECT_CONFIG();
-  EDITABLE_PICTURE.style.filter = '';
+const initLevelSlider = function () {
+  levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
+  effect.none.checked = true;
+  activeEffectConfig();
+  editablePicture.style.filter = '';
 };
 
 
-const APPLY_EFFECT = {
+const applyEffect = {
   none: function (evt) {
     if (evt.target.checked) {
-      INIT_LEVEL_SLIDER();
+      initLevelSlider();
     }
   },
 
   chrome: function (evt) {
     if (evt.target.checked) {
-      LEVEL_SLIDER.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
-      ACTIVE_EFFECT_CONFIG();
-      EDITABLE_PICTURE.classList.add('effects__preview--chrome');
+      levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
+      activeEffectConfig();
+      editablePicture.classList.add('effects__preview--chrome');
 
-      LEVEL_SLIDER.noUiSlider.on('update', () => {
-        EDITABLE_PICTURE.style.filter = `grayscale(${LEVEL_VALUE.value})`;
+      levelSlider.noUiSlider.on('update', () => {
+        editablePicture.style.filter = `grayscale(${levelValue.value})`;
       });
     }
   },
 
   sepia: function (evt) {
     if (evt.target.checked) {
-      LEVEL_SLIDER.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
-      ACTIVE_EFFECT_CONFIG();
-      EDITABLE_PICTURE.classList.add('effects__preview--sepia');
+      levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
+      activeEffectConfig();
+      editablePicture.classList.add('effects__preview--sepia');
 
-      LEVEL_SLIDER.noUiSlider.on('update', () => {
-        EDITABLE_PICTURE.style.filter = `sepia(${LEVEL_VALUE.value})`;
+      levelSlider.noUiSlider.on('update', () => {
+        editablePicture.style.filter = `sepia(${levelValue.value})`;
       });
     }
   },
 
   marvin: function (evt) {
     if (evt.target.checked) {
-      LEVEL_SLIDER.noUiSlider.updateOptions ({
+      levelSlider.noUiSlider.updateOptions ({
         range: {
           min: 0,
           max: 100,
@@ -147,18 +147,18 @@ const APPLY_EFFECT = {
         start: 100,
         step: 1,
       });
-      ACTIVE_EFFECT_CONFIG();
-      EDITABLE_PICTURE.classList.add('effects__preview--marvin');
+      activeEffectConfig();
+      editablePicture.classList.add('effects__preview--marvin');
 
-      LEVEL_SLIDER.noUiSlider.on('update', () => {
-        EDITABLE_PICTURE.style.filter = `invert(${LEVEL_VALUE.value}%)`;
+      levelSlider.noUiSlider.on('update', () => {
+        editablePicture.style.filter = `invert(${levelValue.value}%)`;
       });
     }
   },
 
   phobos: function (evt) {
     if (evt.target.checked) {
-      LEVEL_SLIDER.noUiSlider.updateOptions ({
+      levelSlider.noUiSlider.updateOptions ({
         range: {
           min: 0,
           max: 3,
@@ -166,18 +166,18 @@ const APPLY_EFFECT = {
         start: 3,
         step: 0.1,
       });
-      ACTIVE_EFFECT_CONFIG();
-      EDITABLE_PICTURE.classList.add('effects__preview--phobos');
+      activeEffectConfig();
+      editablePicture.classList.add('effects__preview--phobos');
 
-      LEVEL_SLIDER.noUiSlider.on('update', () => {
-        EDITABLE_PICTURE.style.filter = `blur(${LEVEL_VALUE.value}px)`;
+      levelSlider.noUiSlider.on('update', () => {
+        editablePicture.style.filter = `blur(${levelValue.value}px)`;
       });
     }
   },
 
   heat: function (evt) {
     if (evt.target.checked) {
-      LEVEL_SLIDER.noUiSlider.updateOptions ({
+      levelSlider.noUiSlider.updateOptions ({
         range: {
           min: 1,
           max: 3,
@@ -185,29 +185,29 @@ const APPLY_EFFECT = {
         start: 3,
         step: 0.1,
       });
-      ACTIVE_EFFECT_CONFIG();
-      EDITABLE_PICTURE.classList.add('effects__preview--heat');
+      activeEffectConfig();
+      editablePicture.classList.add('effects__preview--heat');
 
-      LEVEL_SLIDER.noUiSlider.on('update', () => {
-        EDITABLE_PICTURE.style.filter = `brightness(${LEVEL_VALUE.value})`;
+      levelSlider.noUiSlider.on('update', () => {
+        editablePicture.style.filter = `brightness(${levelValue.value})`;
       });
     }
   }
 };
 
-const EFFECTS = [EFFECT.none, EFFECT.chrome, EFFECT.sepia, EFFECT.marvin, EFFECT.phobos, EFFECT.heat];
-const EFFECTS_FUNCTIONS = [APPLY_EFFECT.none, APPLY_EFFECT.chrome, APPLY_EFFECT.sepia, APPLY_EFFECT.marvin, APPLY_EFFECT.phobos, APPLY_EFFECT.heat];
+const effects = [effect.none, effect.chrome, effect.sepia, effect.marvin, effect.phobos, effect.heat];
+const effectsFunctions = [applyEffect.none, applyEffect.chrome, applyEffect.sepia, applyEffect.marvin, applyEffect.phobos, applyEffect.heat];
 
-const ADD_LISTENER_EFFECTS = function () {
-  for (let i = 0; i < EFFECTS_FUNCTIONS.length; i++) {
-    EFFECTS[i].addEventListener('change', EFFECTS_FUNCTIONS[i]);
+const addListenerEffects = function () {
+  for (let i = 0; i < effectsFunctions.length; i++) {
+    effects[i].addEventListener('change', effectsFunctions[i]);
   }
 };
 
-const REMOVE_LISTENER_EFFECTS = function () {
-  for (let i = 0; i < EFFECTS_FUNCTIONS.length; i++) {
-    EFFECTS[i].removeEventListener('change', EFFECTS_FUNCTIONS[i]);
+const removeListenerEffects = function () {
+  for (let i = 0; i < effectsFunctions.length; i++) {
+    effects[i].removeEventListener('change', effectsFunctions[i]);
   }
 };
 
-export { ZOOM_INITIAL, ADD_LISTENER_SCALES_CONTROL, REMOVE_LISTENER_SCALES_CONTROL, INIT_LEVEL_SLIDER, ADD_LISTENER_EFFECTS, REMOVE_LISTENER_EFFECTS };
+export { zoomInitial, addListenerScalesControl, removeListenerScalesControl, initLevelSlider, addListenerEffects, removeListenerEffects};
