@@ -47,7 +47,10 @@ const pristineConfig = function () {
   pristine.addValidator(description, isValidLengthDescription, 'Максимальная длинна комментария 140 символов');
 
   const checkForm = function () {
-    buttonSubmit.disabled = isValidHashtagsQuantity() === false || isValidHashtagDuplicate() === false || isValidHashtagSymbol() === false || isValidLengthDescription() === false;
+    buttonSubmit.disabled = isValidHashtagsQuantity() === false
+    || isValidHashtagDuplicate() === false
+    || isValidHashtagSymbol() === false
+    || isValidLengthDescription() === false;
   };
   hashtag.addEventListener('input', checkForm);
   description.addEventListener('input', checkForm);

@@ -1,26 +1,5 @@
-const getRandomNumber = function (min, max) {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-const getRandomUniqueNumber = function (min, max) {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomNumber(min, max);
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomNumber(min, max);
-    }
-    previousValues.push(currentValue);
-
-    return currentValue;
-  };
-};
-
 const getShowAlert = function () {
+  const countdownTimer = 3000;
   const errorModal = document.querySelector('#error').content.querySelector('.error');
   const showErrorModal = errorModal.cloneNode(true);
   showErrorModal.getElementsByTagName('h2')[0].textContent = 'Ошибка запроса при загрузке данных';
@@ -29,7 +8,7 @@ const getShowAlert = function () {
   const removeModal = function () {
     document.body.removeChild(showErrorModal);
   };
-  setTimeout(removeModal, 3000);
+  setTimeout(removeModal, countdownTimer);
 };
 
 const showAlert = function () {
@@ -107,4 +86,4 @@ function debounce (callback, timeoutDelay) {
   };
 }
 
-export { getRandomNumber, getRandomUniqueNumber, getShowAlert, showAlert, onSuccess, debounce };
+export { getShowAlert, showAlert, onSuccess, debounce };
