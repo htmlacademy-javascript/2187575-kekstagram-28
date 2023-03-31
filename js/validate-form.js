@@ -30,7 +30,11 @@ const onModalClose = function () {
 };
 
 const onFormKeydown = function (evt) {
-  if (evt.key === 'Escape' && document.activeElement !== description && document.activeElement !== hashtag && !document.contains(document.querySelector('.error')) && !document.contains(document.querySelector('.success'))) {
+  if (evt.key === 'Escape'
+  && document.activeElement !== description
+  && document.activeElement !== hashtag
+  && !document.contains(document.querySelector('.error'))
+  && !document.contains(document.querySelector('.success'))) {
     evt.preventDefault();
     document.addEventListener('keydown', onFormKeydown);
     onModalClose();
