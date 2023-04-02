@@ -96,7 +96,7 @@ uploadFile.addEventListener('change', () => {
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
   if (matches) {
-    editablePicture.querySelector('img').src = URL.createObjectURL(file);
+    editablePicture.src = URL.createObjectURL(file);
   }
 });
 
