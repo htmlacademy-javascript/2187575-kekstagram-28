@@ -31,7 +31,7 @@ filters.forEach((filter) => {
   });
 });
 
-const getSortedPhotos = function (type = 'default') {
+const getSortedPhotos = function (type) {
   let sorted;
 
   return debounce(() => {
@@ -42,7 +42,7 @@ const getSortedPhotos = function (type = 'default') {
       case 'discussed':
         sorted = getDiscussedPhotos(dataPhotoGallery);
         break;
-      case 'default':
+      default:
         sorted = getDefaultPhotos(dataPhotoGallery);
         break;
     }

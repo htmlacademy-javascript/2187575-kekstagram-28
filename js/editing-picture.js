@@ -120,9 +120,8 @@ const customizesSlider = function (filter) {
       case 'phobos':
         editablePicture.style.filter = `blur(${levelValue.value}px)`;
         break;
-      case 'heat':
+      default:
         editablePicture.style.filter = `brightness(${levelValue.value})`;
-        break;
     }
   });
 };
