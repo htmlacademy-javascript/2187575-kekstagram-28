@@ -6,6 +6,13 @@ const scale = {
   bigger: document.querySelector('.scale__control--bigger'),
 };
 
+const ZoomSettings = {
+  INITIAL_VALUE: 100,
+  MIN_VALUE: 25,
+  MAX_VALUE: 100,
+  STEP_ZOOM: 25,
+};
+
 const levelSliderContainer = document.querySelector('.img-upload__effect-level');
 const levelSlider = document.querySelector('.effect-level__slider');
 const levelValue = document.querySelector('.effect-level__value');
@@ -16,33 +23,27 @@ const effect = {
   sepia: document.getElementById('effect-sepia'),
   marvin: document.getElementById('effect-marvin'),
   phobos: document.getElementById('effect-phobos'),
-  heat: document.getElementById('effect-heat')
+  heat: document.getElementById('effect-heat'),
 };
 
-let initialZoomValue = 100;
-
 const zoomInitial = function () {
-  initialZoomValue = 100;
-  scaleValue.value = `${initialZoomValue}%`;
+  ZoomSettings.INITIAL_VALUE = 100;
+  scaleValue.value = `${ZoomSettings.INITIAL_VALUE}%`;
   editablePicture.style.transform = '';
 };
 
 const zoom = {
   smaller: function () {
-    const MIN_VALUE = 25;
-    const STEP_ZOOM = 25;
-    if (initialZoomValue > MIN_VALUE) {
-      scaleValue.value = `${initialZoomValue -= STEP_ZOOM}%`;
-      editablePicture.style.transform = `scale(${initialZoomValue / 100})`;
+    if (ZoomSettings.INITIAL_VALUE > ZoomSettings.MIN_VALUE) {
+      scaleValue.value = `${ZoomSettings.INITIAL_VALUE -= ZoomSettings.STEP_ZOOM}%`;
+      editablePicture.style.transform = `scale(${ZoomSettings.INITIAL_VALUE / 100})`;
     }
   },
 
   bigger: function () {
-    const MAX_VALUE = 100;
-    const STEP_ZOOM = 25;
-    if (initialZoomValue < MAX_VALUE) {
-      scaleValue.value = `${initialZoomValue += STEP_ZOOM}%`;
-      editablePicture.style.transform = `scale(${initialZoomValue / 100})`;
+    if (ZoomSettings.INITIAL_VALUE < ZoomSettings.MAX_VALUE) {
+      scaleValue.value = `${ZoomSettings.INITIAL_VALUE += ZoomSettings.STEP_ZOOM}%`;
+      editablePicture.style.transform = `scale(${ZoomSettings.INITIAL_VALUE / 100})`;
     }
   }
 };
@@ -95,7 +96,6 @@ const activeEffectConfig = function () {
   levelSliderContainer.style.display = effect.none.checked ? 'none' : 'block';
   levelSlider.style.display = effect.none.checked ? 'none' : 'block';
   editablePicture.className = '';
-  editablePicture.classList.add('img-upload__preview');
 };
 
 const initLevelSlider = function () {
@@ -105,6 +105,26 @@ const initLevelSlider = function () {
   editablePicture.style.filter = '';
 };
 
+const customizesSlider = function (filter) {
+  levelSlider.noUiSlider.on('update', () => {
+    switch (filter) {
+      case 'chrome':
+        editablePicture.style.filter = `grayscale(${levelValue.value})`;
+        break;
+      case 'sepia':
+        editablePicture.style.filter = `sepia(${levelValue.value})`;
+        break;
+      case 'marvin':
+        editablePicture.style.filter = `invert(${levelValue.value}%)`;
+        break;
+      case 'phobos':
+        editablePicture.style.filter = `blur(${levelValue.value}px)`;
+        break;
+      default:
+        editablePicture.style.filter = `brightness(${levelValue.value})`;
+    }
+  });
+};
 
 const applyEffect = {
   none: function (evt) {
@@ -118,10 +138,7 @@ const applyEffect = {
       levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
       activeEffectConfig();
       editablePicture.classList.add('effects__preview--chrome');
-
-      levelSlider.noUiSlider.on('update', () => {
-        editablePicture.style.filter = `grayscale(${levelValue.value})`;
-      });
+      customizesSlider('chrome');
     }
   },
 
@@ -130,10 +147,7 @@ const applyEffect = {
       levelSlider.noUiSlider.updateOptions (NO_UI_SLIDER_CONFIG);
       activeEffectConfig();
       editablePicture.classList.add('effects__preview--sepia');
-
-      levelSlider.noUiSlider.on('update', () => {
-        editablePicture.style.filter = `sepia(${levelValue.value})`;
-      });
+      customizesSlider('sepia');
     }
   },
 
@@ -149,10 +163,7 @@ const applyEffect = {
       });
       activeEffectConfig();
       editablePicture.classList.add('effects__preview--marvin');
-
-      levelSlider.noUiSlider.on('update', () => {
-        editablePicture.style.filter = `invert(${levelValue.value}%)`;
-      });
+      customizesSlider('marvin');
     }
   },
 
@@ -168,10 +179,7 @@ const applyEffect = {
       });
       activeEffectConfig();
       editablePicture.classList.add('effects__preview--phobos');
-
-      levelSlider.noUiSlider.on('update', () => {
-        editablePicture.style.filter = `blur(${levelValue.value}px)`;
-      });
+      customizesSlider('phobos');
     }
   },
 
@@ -187,10 +195,7 @@ const applyEffect = {
       });
       activeEffectConfig();
       editablePicture.classList.add('effects__preview--heat');
-
-      levelSlider.noUiSlider.on('update', () => {
-        editablePicture.style.filter = `brightness(${levelValue.value})`;
-      });
+      customizesSlider('heat');
     }
   }
 };
